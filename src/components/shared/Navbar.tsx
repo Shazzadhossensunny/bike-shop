@@ -41,7 +41,7 @@ export default function Navbar() {
               Home
             </Link>
             <Link
-              to="/products"
+              to="/allProduct"
               className="text-neutral hover:text-primary px-3 py-2"
             >
               Products
