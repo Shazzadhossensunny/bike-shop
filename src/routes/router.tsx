@@ -1,4 +1,7 @@
+import About from "@/pages/About";
 import AllProduct from "@/pages/AllProduct";
+import Checkout from "@/pages/Checkout";
+import Contact from "@/pages/Contact";
 import Error from "@/pages/Error";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
@@ -24,6 +27,18 @@ const router = createBrowserRouter([
       {
         path: "/allProduct/:id",
         element: <ProductDetails />,
+      },
+      {
+        path: "/checkout",
+        element: <Checkout />,
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
       },
     ],
   },
