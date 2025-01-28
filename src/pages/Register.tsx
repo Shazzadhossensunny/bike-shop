@@ -1,14 +1,36 @@
+import LoadingSpinner from "@/components/shared/LoadingSpinner";
+import { useRegisterUserMutation } from "@/redux/features/customer/customerApi";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Register() {
+  const [registerUser, { isLoading }] = useRegisterUserMutation();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    // formState: { errors },
+    formState: { errors },
+    reset,
   } = useForm();
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const userInfo = {
+      name: data.name,
+      email: data.email,
+      password: data.password,
+    };
+    try {
+      const result = await registerUser(userInfo).unwrap();
+      if (result.error) {
+        toast.error(result.error?.data?.message);
+      } else {
+        toast.success("User registration successfully!");
+        navigate("/login");
+      }
+    } catch (error) {
+      toast.error("Something went wrong!");
+    }
+    reset();
   };
   return (
     <div className="min-h-screen flex items-center justify-center bg-base">
@@ -26,12 +48,14 @@ export default function Register() {
             </label>
             <input
               type="text"
-              {...register("name")}
+              {...register("name", { required: "Name is required" })}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
             />
-            {/* {errors.name && (
-          <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
-        )} */}
+            {errors.name && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.name.message as string}
+              </p>
+            )}
           </div>
           <div>
             <label
@@ -42,12 +66,20 @@ export default function Register() {
             </label>
             <input
               type="email"
-              {...register("email")}
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "Invalid email address",
+                },
+              })}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
             />
-            {/* {errors.email && (
-          <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
-        )} */}
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.email.message as string}
+              </p>
+            )}
           </div>
           <div>
             <label
@@ -58,39 +90,33 @@ export default function Register() {
             </label>
             <input
               type="password"
-              {...register("password")}
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 6,
+                  message: "Password must be at least 6 characters",
+                },
+              })}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
             />
-            {/* {errors.password && (
-          <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
-        )} */}
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.password.message as string}
+              </p>
+            )}
           </div>
-          <div>
-            <label
-              htmlFor="confirmPassword"
-              className="block text-sm font-medium text-neutral"
-            >
-              Confirm Password
-            </label>
-            <input
-              type="password"
-              {...register("confirmPassword")}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
-            />
-            {/* {errors.confirmPassword && (
-          <p className="text-red-500 text-sm mt-1">{errors.confirmPassword.message}</p>
-        )} */}
-          </div>
+
           <button
             type="submit"
-            className="w-full bg-primary text-white py-2 rounded-md hover:bg-blue-700 transition duration-300"
+            disabled={isLoading}
+            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-400"
           >
-            Register
+            {isLoading ? <LoadingSpinner /> : "Register"}
           </button>
         </form>
         <div className="mt-4 text-center">
           <p className="text-sm text-neutral">
-            Already have an account?{" "}
+            Already have an account?
             <Link to="/login" className="text-primary hover:underline">
               Login here
             </Link>
