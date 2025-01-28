@@ -42,12 +42,17 @@ const baseQueryWithRefreshToken: BaseQueryFn<
       method: "POST",
       credentials: "include",
     });
-    const refreshData = await res.json();
-    if (refreshData.data) {
-      const user = (api.getState() as RootState).auth.name;
+    const refreshData: {
+      data?: { accessToken: string };
+      error?: string;
+    } = await res.json();
+    if (refreshData.data?.accessToken) {
+      const currentState = api.getState() as RootState;
+      const { name, email } = currentState.auth;
       api.dispatch(
         setUser({
-          user,
+          user: name,
+          email,
           token: refreshData.data.accessToken,
         })
       );

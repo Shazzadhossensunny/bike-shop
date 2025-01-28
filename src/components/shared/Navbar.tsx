@@ -4,12 +4,28 @@ import {
   UserIcon,
   MenuIcon,
   XIcon,
+  ChevronRightIcon,
+  LogoutIcon,
 } from "@heroicons/react/outline";
 import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { logout } from "@/redux/features/auth/authSlice";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.auth.name); // Replace with actual user data
+
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const toggleUserMenu = () => setIsUserMenuOpen(!isUserMenuOpen);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    setIsUserMenuOpen(false); // Close the dropdown
+  };
+
   return (
     <nav className="bg-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -59,34 +75,60 @@ export default function Navbar() {
               Contact
             </Link>
 
-            {/* Cart and User Icons */}
-            <div className="flex items-center space-x-4">
-              <Link
-                to="/cart"
-                className="relative text-neutral hover:text-primary"
-              >
-                <ShoppingCartIcon className="h-6 w-6" />
+            {/* Cart */}
+            <Link
+              to="/cart"
+              className="relative text-neutral hover:text-primary"
+            >
+              <ShoppingCartIcon className="h-6 w-6" />
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full h-4 w-4 flex items-center justify-center text-xs">
+                {/* Example cart count */}
+              </span>
+            </Link>
 
-                <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full h-4 w-4 flex items-center justify-center text-xs"></span>
-              </Link>
-
-              <div className="relative group">
-                <UserIcon className="h-6 w-6 text-neutral hover:text-primary" />
-                <div className="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg hidden group-hover:block">
-                  <Link to="#" className="block px-4 py-2 hover:bg-base"></Link>
-                  {/* <button
-                      onClick={handleLogout}
-                      className="w-full text-left px-4 py-2 hover:bg-base"
-                    >
-                      Logout
-                    </button> */}
-                </div>
+            {/* User Dropdown */}
+            {user ? (
+              <div className="relative">
+                <button
+                  onClick={toggleUserMenu}
+                  className="flex items-center text-neutral hover:text-primary focus:outline-none"
+                >
+                  <UserIcon className="h-6 w-6" />
+                </button>
+                {isUserMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-64 bg-white border rounded-md shadow-lg z-10">
+                    <div className="p-4 border-b">
+                      <p className="text-sm text-neutral">Logged in as:</p>
+                      <p className="text-lg font-semibold">{user.email}</p>
+                    </div>
+                    <div className="py-2">
+                      <Link
+                        to="/dashboard"
+                        className="flex items-center px-4 py-2 text-neutral hover:bg-primary/10 hover:text-primary"
+                        onClick={() => setIsUserMenuOpen(false)}
+                      >
+                        <ChevronRightIcon className="h-5 w-5 mr-2" />
+                        Dashboard
+                      </Link>
+                      <button
+                        onClick={handleLogout}
+                        className="flex items-center w-full px-4 py-2 text-neutral hover:bg-red-500 hover:text-white"
+                      >
+                        <LogoutIcon className="h-5 w-5 mr-2" />
+                        Logout
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
-
-              <Link to="/login" className="text-neutral hover:text-primary">
+            ) : (
+              <Link
+                to="/login"
+                className="text-neutral hover:text-primary px-3 py-2"
+              >
                 Login
               </Link>
-            </div>
+            )}
           </div>
         </div>
 
@@ -123,9 +165,17 @@ export default function Navbar() {
                 Contact
               </Link>
 
-              {/* Mobile Authentication Links */}
-
-              <>
+              {user ? (
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    toggleMenu();
+                  }}
+                  className="w-full text-left text-neutral hover:bg-base block px-3 py-2 rounded-md"
+                >
+                  Logout
+                </button>
+              ) : (
                 <Link
                   to="/login"
                   onClick={toggleMenu}
@@ -133,33 +183,7 @@ export default function Navbar() {
                 >
                   Login
                 </Link>
-                <Link
-                  to="/register"
-                  onClick={toggleMenu}
-                  className="text-neutral hover:bg-base block px-3 py-2 rounded-md"
-                >
-                  Register
-                </Link>
-              </>
-
-              <>
-                <Link
-                  to="#"
-                  onClick={toggleMenu}
-                  className="text-neutral hover:bg-base block px-3 py-2 rounded-md"
-                >
-                  {/* {user?.role === 'admin' ? 'Admin Dashboard' : 'My Dashboard'} */}
-                </Link>
-                <button
-                  onClick={() => {
-                    //   handleLogout();
-                    toggleMenu();
-                  }}
-                  className="w-full text-left text-neutral hover:bg-base block px-3 py-2 rounded-md"
-                >
-                  Logout
-                </button>
-              </>
+              )}
             </div>
           </div>
         )}
