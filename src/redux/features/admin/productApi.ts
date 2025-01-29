@@ -43,6 +43,14 @@ const productApi = baseApi.injectEndpoints({
       transformResponse: (response: TResponseRedux<TProduct>) => response.data,
       invalidatesTags: ["Products"],
     }),
+    deleteProductById: builder.mutation({
+      query: (id) => ({
+        url: `/products/${id}`,
+        method: "DELETE",
+      }),
+      transformResponse: (response: TResponseRedux<TProduct>) => response.data,
+      invalidatesTags: ["Products"],
+    }),
   }),
 });
 
@@ -50,4 +58,5 @@ export const {
   useAddProductMutation,
   useGetAllProductQuery,
   useUpdateProductByIdMutation,
+  useDeleteProductByIdMutation,
 } = productApi;

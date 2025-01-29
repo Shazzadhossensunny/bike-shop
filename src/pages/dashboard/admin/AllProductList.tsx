@@ -1,8 +1,12 @@
 import { Pagination } from "@/components/shared/Pagination";
 import TableLoadingSppiner from "@/components/shared/TableLoadingSppiner";
-import { useGetAllProductQuery } from "@/redux/features/admin/productApi";
+import {
+  useDeleteProductByIdMutation,
+  useGetAllProductQuery,
+} from "@/redux/features/admin/productApi";
 import { Edit, Trash2 } from "lucide-react";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 
 export default function AllProductList() {
@@ -14,11 +18,18 @@ export default function AllProductList() {
     { name: "sort", value: "price" },
   ]);
 
+  const [deleteProductById] = useDeleteProductByIdMutation();
+
   const metaData = products?.meta;
 
   const handlePageChange = (page: number, size: number) => {
     setCurrentPage(page);
     setPageSize(size);
+  };
+
+  const handleClick = async (id: string) => {
+    await deleteProductById(id);
+    toast.success("Product delete successfully");
   };
 
   return (
@@ -59,7 +70,10 @@ export default function AllProductList() {
                     >
                       <Edit size={20} />
                     </Link>
-                    <button className="text-red-500 hover:text-red-700">
+                    <button
+                      onClick={() => handleClick(product?._id)}
+                      className="text-red-500 hover:text-red-700"
+                    >
                       <Trash2 size={20} />
                     </button>
                   </td>
