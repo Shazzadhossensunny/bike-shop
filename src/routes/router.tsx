@@ -3,6 +3,7 @@ import AllProduct from "@/pages/AllProduct";
 import Checkout from "@/pages/Checkout";
 import Contact from "@/pages/Contact";
 import AddProduct from "@/pages/dashboard/AddProduct";
+import AllProductList from "@/pages/dashboard/AllProductList";
 import Error from "@/pages/Error";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
@@ -48,9 +49,14 @@ const router = createBrowserRouter([
     path: "dashboard",
     element: <Dashboard />,
     children: [
+      // admin
       {
         path: "add-product",
         element: <AddProduct />,
+      },
+      {
+        path: "products",
+        element: <AllProductList />,
       },
     ],
   },

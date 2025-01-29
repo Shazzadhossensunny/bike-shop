@@ -137,7 +137,7 @@ export default function Sidebar() {
                     <span className="mx-4 font-medium">Add Product</span>
                   </NavLink>
                   <NavLink
-                    to="/dashboard/manageContest"
+                    to="/dashboard/products"
                     className={({ isActive }) =>
                       `flex items-center px-4 py-3 my-2 transition-all duration-300 transform rounded-lg hover:bg-base/20 group ${
                         isActive
@@ -147,7 +147,7 @@ export default function Sidebar() {
                     }
                   >
                     <Settings className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
-                    <span className="mx-4 font-medium">Manage Contests</span>
+                    <span className="mx-4 font-medium">All Product</span>
                   </NavLink>
                 </>
               )}
@@ -158,7 +158,7 @@ export default function Sidebar() {
         {/* Footer */}
         <div className="px-4 py-2 bg-base/10 rounded-lg backdrop-blur-sm">
           <p className="text-base/80 text-sm text-center">
-            © 2024 BikeShop. All rights reserved.
+            © 2025 BikeShop. All rights reserved.
           </p>
         </div>
       </div>
