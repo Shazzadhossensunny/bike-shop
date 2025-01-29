@@ -46,14 +46,17 @@ export default function AllProductList() {
                 </td>
               </tr>
             ) : (
-              products?.data?.map((product: any) => (
-                <tr key={product.id} className="border-b hover:bg-gray-100">
+              products?.data?.map((product) => (
+                <tr key={product?._id} className="border-b hover:bg-gray-100">
                   <td className="p-2">{product.name}</td>
                   <td className="p-2">{product.category}</td>
                   <td className="p-2">${product.price}</td>
                   <td className="p-2">{product.stock}</td>
                   <td className="p-2 flex space-x-2">
-                    <Link to={""} className="text-blue-500 hover:text-blue-700">
+                    <Link
+                      to={`/dashboard/products/${product?._id}`}
+                      className="text-blue-500 hover:text-blue-700"
+                    >
                       <Edit size={20} />
                     </Link>
                     <button className="text-red-500 hover:text-red-700">

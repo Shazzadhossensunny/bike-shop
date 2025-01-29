@@ -2,8 +2,9 @@ import About from "@/pages/About";
 import AllProduct from "@/pages/AllProduct";
 import Checkout from "@/pages/Checkout";
 import Contact from "@/pages/Contact";
-import AddProduct from "@/pages/dashboard/AddProduct";
-import AllProductList from "@/pages/dashboard/AllProductList";
+import AddProduct from "@/pages/dashboard/admin/AddProduct";
+import AllProductList from "@/pages/dashboard/admin/AllProductList";
+import ProductUpdate from "@/pages/dashboard/admin/ProductUpdate";
 import Error from "@/pages/Error";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
       {
         path: "products",
         element: <AllProductList />,
+      },
+      {
+        path: "products/:id",
+        element: <ProductUpdate />,
       },
     ],
   },

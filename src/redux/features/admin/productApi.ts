@@ -34,7 +34,20 @@ const productApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Products"],
     }),
+    updateProductById: builder.mutation({
+      query: ({ id, ...data }) => ({
+        url: `/products/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+      transformResponse: (response: TResponseRedux<TProduct>) => response.data,
+      invalidatesTags: ["Products"],
+    }),
   }),
 });
 
-export const { useAddProductMutation, useGetAllProductQuery } = productApi;
+export const {
+  useAddProductMutation,
+  useGetAllProductQuery,
+  useUpdateProductByIdMutation,
+} = productApi;
