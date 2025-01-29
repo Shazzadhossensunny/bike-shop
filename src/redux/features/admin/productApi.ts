@@ -1,7 +1,6 @@
 import { baseApi } from "@/redux/api/baseApi";
-// import { TQueryParam, TResponseRedux } from "@/type";
 
-const customerApi = baseApi.injectEndpoints({
+const productApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     // getMyOfferedCourse: builder.query({
     //   query: (args) => {
@@ -25,15 +24,15 @@ const customerApi = baseApi.injectEndpoints({
     //     };
     //   },
     // }),
-    registerUser: builder.mutation({
+    addProduct: builder.mutation({
       query: (data) => ({
-        url: `/users/register`,
+        url: `/products`,
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["Users"],
+      invalidatesTags: ["Products"],
     }),
   }),
 });
 
-export const { useRegisterUserMutation } = customerApi;
+export const { useAddProductMutation } = productApi;
