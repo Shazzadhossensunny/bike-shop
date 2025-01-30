@@ -8,6 +8,7 @@ import ProductUpdate from "@/pages/dashboard/admin/ProductUpdate";
 import Error from "@/pages/Error";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
+import PaymentSuccess from "@/pages/PaymentSuccess";
 import ProductDetails from "@/pages/ProductDetails";
 import Register from "@/pages/Register";
 import Dashboard from "@/root/Dashboard";
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "/checkout",
         element: <Checkout />,
+      },
+      {
+        path: "/payment-success",
+        element: <PaymentSuccess />,
       },
       {
         path: "/about",
