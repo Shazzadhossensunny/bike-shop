@@ -35,3 +35,36 @@ export default function PaymentSuccess() {
     </>
   );
 }
+
+// PaymentSuccessPage
+// const PaymentSuccessPage = () => {
+//   const [orderDetails, setOrderDetails] = useState(null);
+//   const location = useLocation();
+
+//   useEffect(() => {
+//     const params = new URLSearchParams(location.search);
+//     const orderId = params.get('orderId');
+
+//     // Fetch order details
+//     const fetchOrderDetails = async () => {
+//       try {
+//         const response = await axios.get(`/api/orders/${orderId}`);
+//         setOrderDetails(response.data);
+
+//         // Show success toast
+//         toast.success('Payment Completed Successfully!');
+//       } catch (error) {
+//         toast.error('Error fetching order details');
+//       }
+//     };
+
+//     if (orderId) fetchOrderDetails();
+//   }, []);
+
+//   return (
+//     <div>
+//       <h1>Payment Success</h1>
+//       {/* Display order details */}
+//     </div>
+//   );
+// };
