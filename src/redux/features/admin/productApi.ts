@@ -4,13 +4,15 @@ import { TProduct, TQueryParam, TResponseRedux } from "@/type";
 const productApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllProduct: builder.query({
-      query: (args) => {
+      query: (args: TQueryParam[]) => {
         const params = new URLSearchParams();
-        if (args) {
-          args.forEach((item: TQueryParam) => {
-            params.append(item.name, item.value as string);
-          });
-        }
+        args.forEach((arg) => {
+          if (Array.isArray(arg.value)) {
+            arg.value.forEach((val) => params.append(arg.name, val.toString()));
+          } else {
+            params.append(arg.name, arg.value.toString());
+          }
+        });
         return {
           url: `/products`,
           method: "GET",
@@ -33,6 +35,13 @@ const productApi = baseApi.injectEndpoints({
         body: data,
       }),
       invalidatesTags: ["Products"],
+    }),
+    getProductDetails: builder.query({
+      query: (id) => ({
+        url: `/products/${id}`,
+        method: "GET",
+      }),
+      transformResponse: (response: TResponseRedux<TProduct>) => response.data,
     }),
     updateProductById: builder.mutation({
       query: ({ id, ...data }) => ({
@@ -57,6 +66,7 @@ const productApi = baseApi.injectEndpoints({
 export const {
   useAddProductMutation,
   useGetAllProductQuery,
+  useGetProductDetailsQuery,
   useUpdateProductByIdMutation,
   useDeleteProductByIdMutation,
 } = productApi;

@@ -44,7 +44,7 @@ export default function AllProductList() {
             <tr className="bg-primary text-white">
               <th className="p-2 text-left">Name</th>
               <th className="p-2 text-left">Category</th>
-              <th className="p-2 text-left">Price</th>
+              <th className="p-2 text-left">Price (BDT)</th>
               <th className="p-2 text-left">Stock</th>
               <th className="p-2 text-left">Actions</th>
             </tr>
@@ -61,7 +61,7 @@ export default function AllProductList() {
                 <tr key={product?._id} className="border-b hover:bg-gray-100">
                   <td className="p-2">{product.name}</td>
                   <td className="p-2">{product.category}</td>
-                  <td className="p-2">${product.price}</td>
+                  <td className="p-2">{product.price} TK</td>
                   <td className="p-2">{product.stock}</td>
                   <td className="p-2 flex space-x-2">
                     <Link

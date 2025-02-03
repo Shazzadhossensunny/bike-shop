@@ -1,7 +1,7 @@
 import { addToCart } from "@/redux/features/cart/cartSlice";
 import { useAppDispatch } from "@/redux/hook";
 
-export default function AddToCartButton({ product }) {
+export default function AddToCartButton({ product }: any) {
   const dispatch = useAppDispatch();
 
   const handleAddToCart = () => {

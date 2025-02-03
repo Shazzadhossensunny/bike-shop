@@ -33,7 +33,27 @@ const customerApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Users"],
     }),
+    createOrder: builder.mutation({
+      query: (data) => ({
+        url: `/orders/`,
+        method: "POST",
+        body: data,
+      }),
+      // invalidatesTags: ["Users"],
+    }),
+    initiatePayment: builder.mutation({
+      query: (args) => ({
+        url: `/orders/${args.id}/payment`,
+        method: "POST",
+        body: args.data,
+      }),
+      // invalidatesTags: ["Users"],
+    }),
   }),
 });
 
-export const { useRegisterUserMutation } = customerApi;
+export const {
+  useRegisterUserMutation,
+  useCreateOrderMutation,
+  useInitiatePaymentMutation,
+} = customerApi;
