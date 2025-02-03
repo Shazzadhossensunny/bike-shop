@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { StarIcon, ShieldCheckIcon, TruckIcon } from "@heroicons/react/solid";
+import AddToCartButton from "@/components/shared/AddToCartbutton";
 
 // Dummy product data (replace with actual API/Redux integration)
 const PRODUCTS = [
@@ -165,7 +166,7 @@ export default function ProductDetails() {
                 +
               </button>
             </div>
-            <button
+            {/* <button
               disabled={product.stock === 0}
               className={`flex-1 py-2 rounded text-white ${
                 product.stock > 0
@@ -174,7 +175,8 @@ export default function ProductDetails() {
               }`}
             >
               {product.stock > 0 ? "Add to Cart" : "Out of Stock"}
-            </button>
+            </button> */}
+            <AddToCartButton product={product} />
           </div>
 
           {/* Product Guarantees */}

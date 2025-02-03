@@ -1,62 +1,102 @@
-// import { useSelector, useDispatch } from 'react-redux';
-// import { removeFromCart, updateQuantity } from './cartSlice';
-// import { Link } from 'react-router-dom';
+import {
+  removeFromCart,
+  updateQuantity,
+} from "@/redux/features/cart/cartSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { Link } from "react-router-dom";
 
-// export default function CartPage() {
-//   const { items, totalItems } = useSelector((state) => state.cart);
-//   const dispatch = useDispatch();
+export default function CartPage() {
+  const { items, totalItems } = useAppSelector((state) => state.cart);
+  const dispatch = useAppDispatch();
 
-//   const calculateTotal = () =>
-//     items.reduce((total, item) => total + (item.price * item.quantity), 0);
+  const calculateTotal = () =>
+    items.reduce((total, item) => total + item.price * item.quantity, 0);
 
-//   return (
-//     <div className="container mx-auto p-4">
-//       <h1 className="text-2xl font-bold mb-4">Your Cart ({totalItems} items)</h1>
+  return (
+    <div className="container mx-auto p-6">
+      <h2 className="text-3xl font-bold mb-6 text-center">
+        Your Cart ({totalItems} items)
+      </h2>
 
-//       {items.map(item => (
-//         <div key={item.id} className="flex items-center mb-4">
-//           <img src={item.image} alt={item.name} className="w-20 h-20 object-cover mr-4" />
-//           <div className="flex-1">
-//             <h2>{item.name}</h2>
-//             <p>${item.price.toFixed(2)}</p>
-//             <div className="flex items-center">
-//               <button
-//                 onClick={() => dispatch(updateQuantity({
-//                   id: item.id,
-//                   quantity: Math.max(1, item.quantity - 1)
-//                 }))}
-//               >
-//                 -
-//               </button>
-//               <span>{item.quantity}</span>
-//               <button
-//                 onClick={() => dispatch(updateQuantity({
-//                   id: item.id,
-//                   quantity: item.quantity + 1
-//                 }))}
-//               >
-//                 +
-//               </button>
-//               <button
-//                 onClick={() => dispatch(removeFromCart(item.id))}
-//                 className="ml-4 text-red-500"
-//               >
-//                 Remove
-//               </button>
-//             </div>
-//           </div>
-//         </div>
-//       ))}
+      {items.length === 0 ? (
+        <div className="text-center text-gray-500 text-xl py-10">
+          <p className="mb-4">No products available in your cart.</p>
+          <Link
+            to="/allProduct"
+            className="bg-blue-500 text-white px-6 py-2 rounded-md shadow-md hover:bg-blue-600"
+          >
+            Go to Shop
+          </Link>
+        </div>
+      ) : (
+        <div className="space-y-6">
+          {items.map((item) => (
+            <div
+              key={item.id}
+              className="flex items-center bg-white shadow-md p-4 rounded-lg gap-4"
+            >
+              <img
+                src={item.imageUrl}
+                alt={item.name}
+                className="w-20 h-20 object-cover rounded-md"
+              />
+              <div className="flex-1">
+                <h3 className="text-lg font-semibold">{item.name}</h3>
+                <p className="text-gray-600">${item.price.toFixed(2)}</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() =>
+                    dispatch(
+                      updateQuantity({
+                        id: item.id,
+                        quantity: Math.max(1, item.quantity - 1),
+                      })
+                    )
+                  }
+                  className="bg-gray-200 px-3 py-1 rounded-md text-lg"
+                >
+                  -
+                </button>
+                <span className="text-lg font-semibold">{item.quantity}</span>
+                <button
+                  onClick={() =>
+                    dispatch(
+                      updateQuantity({
+                        id: item.id,
+                        quantity: item.quantity + 1,
+                      })
+                    )
+                  }
+                  className="bg-gray-200 px-3 py-1 rounded-md text-lg"
+                >
+                  +
+                </button>
+              </div>
+              <button
+                onClick={() => dispatch(removeFromCart(item.id))}
+                className="text-red-500 hover:text-red-700 ml-4"
+              >
+                Remove
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
 
-//       <div className="mt-4">
-//         <p>Total: ${calculateTotal().toFixed(2)}</p>
-//         <Link
-//           to="/checkout"
-//           className="bg-primary text-white py-2 px-4 rounded"
-//         >
-//           Proceed to Checkout
-//         </Link>
-//       </div>
-//     </div>
-//   );
-// }
+      {items.length > 0 && (
+        <div className="text-right mt-6">
+          <p className="text-xl font-bold">
+            Total: ${calculateTotal().toFixed(2)}
+          </p>
+          <Link
+            to="/checkout"
+            className="mt-4 inline-block bg-green-500 text-white px-6 py-2 rounded-md shadow-md hover:bg-green-600"
+          >
+            Proceed to Checkout
+          </Link>
+        </div>
+      )}
+    </div>
+  );
+}

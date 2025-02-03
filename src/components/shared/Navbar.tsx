@@ -17,6 +17,8 @@ export default function Navbar() {
 
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.name); // Replace with actual user data
+  const totalItems = useAppSelector((state) => state.cart.totalItems);
+  console.log(totalItems);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const toggleUserMenu = () => setIsUserMenuOpen(!isUserMenuOpen);
@@ -81,9 +83,14 @@ export default function Navbar() {
               className="relative text-neutral hover:text-primary"
             >
               <ShoppingCartIcon className="h-6 w-6" />
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full h-4 w-4 flex items-center justify-center text-xs">
-                {/* Example cart count */}
-              </span>
+              {totalItems > 0 && (
+                <span
+                  className="absolute -top-2 -right-2 bg-red-500 text-white
+          rounded-full h-5 w-5 flex items-center justify-center text-xs"
+                >
+                  {totalItems}
+                </span>
+              )}
             </Link>
 
             {/* User Dropdown */}

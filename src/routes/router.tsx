@@ -1,5 +1,6 @@
 import About from "@/pages/About";
 import AllProduct from "@/pages/AllProduct";
+import CartPage from "@/pages/Cart";
 import Checkout from "@/pages/Checkout";
 import Contact from "@/pages/Contact";
 import AddProduct from "@/pages/dashboard/admin/AddProduct";
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "/allProduct/:id",
         element: <ProductDetails />,
+      },
+      {
+        path: "/cart",
+        element: <CartPage />,
       },
       {
         path: "/checkout",

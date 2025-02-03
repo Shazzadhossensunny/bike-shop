@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { FilterIcon, SearchIcon } from "@heroicons/react/solid";
+import AddToCartButton from "@/components/shared/AddToCartbutton";
 
 // Dummy product data (replace with actual API/Redux integration)
 const PRODUCTS = [
@@ -195,7 +196,7 @@ export default function AllProduct() {
                     >
                       View Details
                     </Link>
-                    <button
+                    {/* <button
                       disabled={product.stock === 0}
                       className={`flex-1 text-white py-2 rounded ${
                         product.stock > 0
@@ -204,7 +205,8 @@ export default function AllProduct() {
                       }`}
                     >
                       {product.stock > 0 ? "Add to Cart" : "Out of Stock"}
-                    </button>
+                    </button> */}
+                    <AddToCartButton product={product} />
                   </div>
                 </div>
               </div>
