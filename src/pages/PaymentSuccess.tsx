@@ -14,8 +14,6 @@ export default function PaymentSuccess() {
     error,
   } = useGetSingleOrderByOrderIdQuery(orderId || "");
 
-  console.log(orders);
-
   useEffect(() => {
     const status = searchParams.get("status");
     if (status === "success") {
@@ -90,7 +88,7 @@ export default function PaymentSuccess() {
             </div>
 
             {/* Order Details */}
-            <div className="p-6">
+            <div className="p-6 mb-5">
               <div className="space-y-4">
                 <div className="flex justify-between items-center border-b pb-4">
                   <span className="text-gray-600 font-medium">Order ID</span>

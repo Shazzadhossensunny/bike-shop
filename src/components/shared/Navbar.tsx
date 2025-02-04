@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   ShoppingCartIcon,
   UserIcon,
@@ -14,18 +14,19 @@ import { logout } from "@/redux/features/auth/authSlice";
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.auth.name); // Replace with actual user data
+  const user = useAppSelector((state) => state.auth.name);
   const totalItems = useAppSelector((state) => state.cart.totalItems);
-  console.log(totalItems);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const toggleUserMenu = () => setIsUserMenuOpen(!isUserMenuOpen);
 
   const handleLogout = () => {
     dispatch(logout());
-    setIsUserMenuOpen(false); // Close the dropdown
+    setIsUserMenuOpen(false);
+    navigate("/");
   };
 
   return (
@@ -103,7 +104,7 @@ export default function Navbar() {
                   <UserIcon className="h-6 w-6" />
                 </button>
                 {isUserMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-64 bg-white border rounded-md shadow-lg z-10">
+                  <div className="absolute right-0 mt-2 w-64 bg-white border rounded-md shadow-lg z-50">
                     <div className="p-4 border-b">
                       <p className="text-sm text-neutral">Logged in as:</p>
                       <p className="text-lg font-semibold">{user.email}</p>
@@ -151,7 +152,7 @@ export default function Navbar() {
                 Home
               </Link>
               <Link
-                to="/products"
+                to="/allProduct"
                 onClick={toggleMenu}
                 className="text-neutral hover:bg-base block px-3 py-2 rounded-md"
               >

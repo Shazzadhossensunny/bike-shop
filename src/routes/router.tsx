@@ -5,6 +5,7 @@ import Checkout from "@/pages/Checkout";
 import Contact from "@/pages/Contact";
 import AddProduct from "@/pages/dashboard/admin/AddProduct";
 import AllProductList from "@/pages/dashboard/admin/AllProductList";
+import AllUserList from "@/pages/dashboard/admin/AllUserList";
 import ProductUpdate from "@/pages/dashboard/admin/ProductUpdate";
 import Error from "@/pages/Error";
 import Home from "@/pages/Home";
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
     element: <Dashboard />,
     children: [
       // admin
+      {
+        path: "all-users",
+        element: <AllUserList />,
+      },
       {
         path: "add-product",
         element: <AddProduct />,

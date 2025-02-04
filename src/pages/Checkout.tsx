@@ -297,7 +297,7 @@ export default function Checkout() {
             >
               {isCreating || isProcessingPayment
                 ? "Processing..."
-                : "Complete Order"}
+                : "Order Now"}
             </button>
           </form>
         </div>
