@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "@/redux/hook";
 import { toast } from "react-hot-toast";
@@ -23,25 +23,42 @@ export default function Checkout() {
   const { items, totalItems } = useAppSelector((state) => state.cart);
   const user = useAppSelector((state) => state.auth.name);
 
+  // Check for admin access and redirect
+  useEffect(() => {
+    if (user?.role === "admin") {
+      toast.error(
+        "Administrators cannot place orders. Please use a customer account."
+      );
+      navigate("/");
+      return;
+    }
+  }, [user?.role, navigate]);
+
   // Redirect if user is not logged in
   useEffect(() => {
     if (!user) {
-      toast.error("You need to log in to proceed to checkout");
+      toast.error("Please log in to complete your purchase", {
+        duration: 4000,
+        icon: "🔒",
+      });
       navigate("/login");
     }
   }, [user, navigate]);
 
-  // Redirect if cart is empty
+  // Redirect if cart is empty with message
   useEffect(() => {
     if (items.length === 0) {
+      toast.error("Your cart is empty. Add some items before checkout!", {
+        duration: 3000,
+        icon: "🛒",
+      });
       navigate("/cart");
     }
   }, [items, navigate]);
 
-  if (!user || items.length === 0) {
-    return null; // Prevent rendering if redirecting
+  if (!user || items.length === 0 || user?.role === "admin") {
+    return null;
   }
-
   const [createOrder, { isLoading: isCreating }] = useCreateOrderMutation();
   const [initiatePayment, { isLoading: isProcessingPayment }] =
     useInitiatePaymentMutation();
@@ -55,34 +72,85 @@ export default function Checkout() {
   const calculateTotal = () =>
     items.reduce((total, item) => total + item.price * item.quantity, 0);
 
-  const onSubmit = async (data: CheckoutFormData) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    // Show processing toast
+    const loadingToast = toast.loading("Processing your order...", {
+      icon: "⏳",
+    });
     try {
+      // Create order
       const orderResponse = await createOrder({
         products: items.map((item) => ({
           productId: item.id,
           quantity: item.quantity,
           price: item.price,
         })),
-        customer: {
+        shippingAddress: {
           name: `${data.firstName} ${data.lastName}`,
           email: data.email,
           address: data.address,
           city: data.city,
           postalCode: data.zipCode,
+          phone: data.phone,
         },
         totalAmount: calculateTotal(),
       }).unwrap();
 
+      // Order created successfully
+      toast.success("Order created successfully!", {
+        duration: 3000,
+        icon: "✅",
+      });
+      // Initiate payment
+
+      console.log("orderid", orderResponse.data._id);
       const paymentResponse = await initiatePayment({
-        orderId: orderResponse.data._id,
-        customer: orderResponse.data.customer,
+        id: orderResponse.data._id,
+        name: `${data.firstName} ${data.lastName}`,
+        email: data.email,
+        phone: data.phone,
+        address: data.address,
+        city: data.city,
+        postalCode: data.zipCode,
       }).unwrap();
 
-      if (paymentResponse?.data?.paymentUrl) {
-        window.location.href = paymentResponse.data.paymentUrl;
+      // Dismiss the loading toast
+      toast.dismiss(loadingToast);
+      console.log(paymentResponse);
+      if (paymentResponse?.paymentUrl) {
+        toast.success("Redirecting to payment gateway...", {
+          duration: 2000,
+          icon: "💳",
+        });
+        setTimeout(() => {
+          window.location.href = paymentResponse?.paymentUrl;
+        }, 1500);
       }
     } catch (error: any) {
-      toast.error(error.data?.message || "Failed to process order");
+      // Dismiss the loading toast
+      toast.dismiss(loadingToast);
+
+      // Handle specific error cases
+      if (error.status === 401) {
+        toast.error("Your session has expired. Please log in again.", {
+          duration: 4000,
+          icon: "⚠️",
+        });
+        navigate("/login");
+        return;
+      }
+
+      if (error.data?.message) {
+        toast.error(error.data.message, {
+          duration: 4000,
+          icon: "❌",
+        });
+      } else {
+        toast.error("Something went wrong. Please try again later.", {
+          duration: 4000,
+          icon: "❌",
+        });
+      }
     }
   };
 

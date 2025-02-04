@@ -35,17 +35,17 @@ const customerApi = baseApi.injectEndpoints({
     }),
     createOrder: builder.mutation({
       query: (data) => ({
-        url: `/orders/`,
+        url: `/orders`,
         method: "POST",
         body: data,
       }),
       // invalidatesTags: ["Users"],
     }),
     initiatePayment: builder.mutation({
-      query: (args) => ({
-        url: `/orders/${args.id}/payment`,
+      query: ({ id, ...data }) => ({
+        url: `/orders/${id}/payment`,
         method: "POST",
-        body: args.data,
+        body: data,
       }),
       // invalidatesTags: ["Users"],
     }),
