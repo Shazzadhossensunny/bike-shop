@@ -7,6 +7,9 @@ import AddProduct from "@/pages/dashboard/admin/AddProduct";
 import AllProductList from "@/pages/dashboard/admin/AllProductList";
 import AllUserList from "@/pages/dashboard/admin/AllUserList";
 import ProductUpdate from "@/pages/dashboard/admin/ProductUpdate";
+import MyOrders from "@/pages/dashboard/user/MyOrders";
+import MyProfile from "@/pages/dashboard/user/MyProfile";
+import OrderDetails from "@/pages/dashboard/user/OrderDetails";
 import Error from "@/pages/Error";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
@@ -77,6 +80,19 @@ const router = createBrowserRouter([
       {
         path: "products/:id",
         element: <ProductUpdate />,
+      },
+      //users
+      {
+        path: "my-orders",
+        element: <MyOrders />,
+      },
+      {
+        path: "my-orders/:id",
+        element: <OrderDetails />,
+      },
+      {
+        path: "profile",
+        element: <MyProfile />,
       },
     ],
   },
