@@ -36,10 +36,20 @@ const productApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Products"],
     }),
+    getFeaturedProducts: builder.query({
+      query: () => ({
+        url: `products/featured`,
+        method: "GET",
+        providesTags: ["Products"],
+      }),
+      transformResponse: (response: TResponseRedux<TProduct[]>) =>
+        response.data,
+    }),
     getProductDetails: builder.query({
       query: (id) => ({
         url: `/products/${id}`,
         method: "GET",
+        providesTags: ["Products"],
       }),
       transformResponse: (response: TResponseRedux<TProduct>) => response.data,
     }),
@@ -69,4 +79,5 @@ export const {
   useGetProductDetailsQuery,
   useUpdateProductByIdMutation,
   useDeleteProductByIdMutation,
+  useGetFeaturedProductsQuery,
 } = productApi;

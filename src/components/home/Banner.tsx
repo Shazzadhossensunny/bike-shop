@@ -21,11 +21,14 @@ export default function Banner() {
           </Link>
         </div>
         <div className="md:w-1/2 flex justify-center">
-          <img
-            src="/placeholder-hero-bike.jpg"
-            alt="Hero Bike"
-            className="max-w-full h-auto rounded-lg shadow-lg"
-          />
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent"></div>
+            <img
+              src="https://images.pexels.com/photos/2393835/pexels-photo-2393835.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+              alt="Hero Bike"
+              className="max-w-full h-auto rounded-lg shadow-lg"
+            />
+          </div>
         </div>
       </div>
     </div>
