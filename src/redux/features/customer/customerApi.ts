@@ -39,7 +39,7 @@ const customerApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      // invalidatesTags: ["Users"],
+      invalidatesTags: ["Orders"],
     }),
     initiatePayment: builder.mutation({
       query: ({ id, ...data }) => ({
@@ -47,7 +47,7 @@ const customerApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      // invalidatesTags: ["Users"],
+      invalidatesTags: ["Payments"],
     }),
   }),
 });

@@ -1,12 +1,13 @@
 import { useEffect } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useAppSelector } from "@/redux/hook";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { toast } from "react-hot-toast";
 import {
   useCreateOrderMutation,
   useInitiatePaymentMutation,
 } from "@/redux/features/customer/customerApi";
+import { clearCart } from "@/redux/features/cart/cartSlice";
 
 interface CheckoutFormData {
   firstName: string;
@@ -22,6 +23,7 @@ export default function Checkout() {
   const navigate = useNavigate();
   const { items, totalItems } = useAppSelector((state) => state.cart);
   const user = useAppSelector((state) => state.auth.name);
+  const dispatch = useAppDispatch();
 
   // Check for admin access and redirect
   useEffect(() => {
@@ -103,7 +105,7 @@ export default function Checkout() {
       });
       // Initiate payment
 
-      console.log("orderid", orderResponse.data._id);
+      // console.log("orderid", orderResponse.data._id);
       const paymentResponse = await initiatePayment({
         id: orderResponse.data._id,
         name: `${data.firstName} ${data.lastName}`,
@@ -116,14 +118,15 @@ export default function Checkout() {
 
       // Dismiss the loading toast
       toast.dismiss(loadingToast);
-      console.log(paymentResponse);
-      if (paymentResponse?.paymentUrl) {
-        toast.success("Redirecting to payment gateway...", {
-          duration: 2000,
-          icon: "💳",
-        });
+      // console.log(paymentResponse);
+      // console.log(paymentResponse.data.paymentUrl);
+      if (paymentResponse.data.paymentUrl) {
+        dispatch(clearCart());
+        toast.success("Redirecting to payment...", { duration: 2000 });
+        // Ensure cart is cleared before redirect
         setTimeout(() => {
-          window.location.href = paymentResponse?.paymentUrl;
+          // Method 1: Direct window location
+          window.location.href = paymentResponse.data.paymentUrl;
         }, 1500);
       }
     } catch (error: any) {

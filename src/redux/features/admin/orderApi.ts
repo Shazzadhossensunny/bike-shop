@@ -6,6 +6,7 @@ const orderAPi = baseApi.injectEndpoints({
       query: (orderId) => ({
         url: `/orders/${orderId}`,
       }),
+      providesTags: ["Orders"],
     }),
   }),
 });

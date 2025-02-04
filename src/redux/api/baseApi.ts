@@ -48,7 +48,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
     } = await res.json();
     if (refreshData.data?.accessToken) {
       const currentState = api.getState() as RootState;
-      const { name, email } = currentState.auth;
+      const { name, email } = currentState.auth as any;
       api.dispatch(
         setUser({
           user: name,
@@ -68,5 +68,5 @@ export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQueryWithRefreshToken,
   endpoints: () => ({}),
-  tagTypes: ["Users", "Products"],
+  tagTypes: ["Users", "Products", "Orders", "Payments"],
 });
