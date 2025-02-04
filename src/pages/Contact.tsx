@@ -79,7 +79,14 @@ export default function Contact() {
 
           {/* Embedded Map Placeholder */}
           <div className="mt-6 bg-base h-64 flex items-center justify-center rounded-lg">
-            <span className="text-neutral">Google Maps Integration</span>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.8354345756!2d144.96305707533993!3d-37.81627997975167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642b8432e1d03%3A0x5045675218ce7e0!2sMelbourne%20VIC%2C%20Australia!5e0!3m2!1sen!2sus!4v1696784321234"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
           </div>
         </div>
 

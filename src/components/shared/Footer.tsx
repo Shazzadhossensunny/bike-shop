@@ -23,7 +23,7 @@ export default function Footer() {
               </Link>
             </li>
             <li>
-              <Link to="/products" className="hover:text-accent">
+              <Link to="/allProduct" className="hover:text-accent">
                 Products
               </Link>
             </li>
@@ -45,22 +45,22 @@ export default function Footer() {
           <h4 className="font-semibold mb-4">Customer Service</h4>
           <ul className="space-y-2">
             <li>
-              <Link to="/shipping" className="hover:text-accent">
+              <Link to="#" className="hover:text-accent">
                 Shipping
               </Link>
             </li>
             <li>
-              <Link to="/returns" className="hover:text-accent">
+              <Link to="#" className="hover:text-accent">
                 Returns
               </Link>
             </li>
             <li>
-              <Link to="/faq" className="hover:text-accent">
+              <Link to="#" className="hover:text-accent">
                 FAQ
               </Link>
             </li>
             <li>
-              <Link to="/support" className="hover:text-accent">
+              <Link to="#" className="hover:text-accent">
                 Support
               </Link>
             </li>
@@ -89,7 +89,7 @@ export default function Footer() {
 
       {/* Copyright */}
       <div className="text-center mt-8 border-t border-base-200 pt-4">
-        <p>&copy; 2024 BikeShop. All Rights Reserved.</p>
+        <p>&copy; 2025 BikeShop. All Rights Reserved.</p>
       </div>
     </footer>
   );

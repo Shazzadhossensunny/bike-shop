@@ -12,7 +12,7 @@ export default function CallToAction() {
           today!
         </p>
         <Link
-          to="/products"
+          to="/allProduct"
           className="bg-primary text-white px-8 py-4 rounded-full text-lg hover:bg-blue-700 transition duration-300"
         >
           Browse Bikes

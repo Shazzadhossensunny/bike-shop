@@ -1,152 +1,164 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { StarIcon, ShieldCheckIcon, TruckIcon } from "@heroicons/react/solid";
+import { ShieldCheckIcon, TruckIcon } from "@heroicons/react/solid";
+import { ChevronDownIcon, ChevronUpIcon, Rocket, StarIcon } from "lucide-react";
 import AddToCartButton from "@/components/shared/AddToCartbutton";
 import { useGetProductDetailsQuery } from "@/redux/features/admin/productApi";
+import LoadingSpinner from "@/components/shared/LoadingSpinner";
 
-// Dummy product data (replace with actual API/Redux integration)
-// const PRODUCTS = [
-//   {
-//     id: "1",
-//     name: "Mountain Explorer Pro",
-//     brand: "RideMaster",
-//     category: "Mountain Bike",
-//     price: 1299.99,
-//     description: `
-//         The Mountain Explorer Pro is a high-performance mountain bike designed for serious trail riders.
-//         Featuring a lightweight aluminum frame, advanced suspension system, and 27.5" wheels,
-//         this bike delivers exceptional control and comfort on challenging terrains.
-//       `,
-//     features: [
-//       "Lightweight Aluminum Frame",
-//       "Advanced Suspension System",
-//       '27.5" Wheels',
-//       "Hydraulic Disc Brakes",
-//       "Shimano XT Components",
-//     ],
-//     specifications: {
-//       frameSize: 'Medium (17")',
-//       weight: "13.5 kg",
-//       wheelSize: '27.5"',
-//       frameMaterial: "Aluminum",
-//       gears: "1x12 Speed",
-//     },
-//     images: [
-//       "/placeholder-bike-1.jpg",
-//       "/placeholder-bike-1-side.jpg",
-//       "/placeholder-bike-1-detail.jpg",
-//     ],
-//     stock: 10,
-//     reviews: [
-//       {
-//         name: "John D.",
-//         rating: 5,
-//         comment: "Amazing bike! Perfect for mountain trails and rough terrain.",
-//       },
-//       {
-//         name: "Sarah M.",
-//         rating: 4,
-//         comment: "Great performance, comfortable ride. Highly recommended!",
-//       },
-//     ],
-//   },
-// ];
 export default function ProductDetails() {
-  const { id } = useParams<{ id: string }>();
-
+  const { id } = useParams();
   const { data: product } = useGetProductDetailsQuery(id);
-  console.log(product);
-  // const product = productData?.find((p: any) => p._id === id);
-
-  // const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
 
-  if (!product) {
-    return <div>Product not found</div>;
-  }
+  if (!product)
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
 
-  // const averageRating =
-  //   product.reviews.reduce((sum, review) => sum + review.rating, 0) /
-  //   product.reviews.length;
+  // Dynamic specifications generator
+  const generateSpecifications = () => {
+    const specs = [
+      { label: "Brand", value: product.brand },
+      { label: "Model", value: product.model },
+      { label: "Category", value: product.category },
+    ];
+    return specs;
+  };
+
+  const faqs = [
+    {
+      question: "What is the warranty period?",
+      answer:
+        "All our bikes come with a 2-year comprehensive warranty covering manufacturing defects.",
+    },
+    {
+      question: "Do you offer international shipping?",
+      answer: "Yes, we provide worldwide shipping with tracking and insurance.",
+    },
+    {
+      question: "Can I return or exchange the bike?",
+      answer:
+        "We offer a 30-day return policy for unused bikes in original condition.",
+    },
+  ];
+
+  // Static Reviews
+  const staticReviews = [
+    {
+      name: "John Doe",
+      rating: 5,
+      date: "2 weeks ago",
+      comment: "Amazing bike! Smooth ride and excellent build quality.",
+    },
+    {
+      name: "Sarah Smith",
+      rating: 4,
+      date: "1 month ago",
+      comment: "Great value for money. Highly recommend for urban commuting.",
+    },
+  ];
+
+  // FAQ Accordion Component
+  const FAQSection = () => {
+    const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+    return (
+      <div className="mt-8">
+        <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
+        {faqs.map((faq, index) => (
+          <div key={index} className="border-b py-2">
+            <div
+              onClick={() => setOpenIndex(openIndex === index ? null : index)}
+              className="flex justify-between items-center cursor-pointer"
+            >
+              <h3 className="font-semibold">{faq.question}</h3>
+              {openIndex === index ? (
+                <ChevronUpIcon className="h-5 w-5 text-primary" />
+              ) : (
+                <ChevronDownIcon className="h-5 w-5 text-primary" />
+              )}
+            </div>
+            {openIndex === index && (
+              <p className="text-neutral mt-2">{faq.answer}</p>
+            )}
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  // Review Section Component
+  const ReviewSection = () => {
+    return (
+      <div className="mt-8">
+        <h2 className="text-2xl font-bold mb-4">Customer Reviews</h2>
+        {staticReviews.map((review, index) => (
+          <div key={index} className="bg-base p-4 rounded-lg mb-4">
+            <div className="flex justify-between items-center mb-2">
+              <div className="flex items-center">
+                <span className="font-semibold mr-2">{review.name}</span>
+                <div className="flex text-yellow-500">
+                  {[...Array(review.rating)].map((_, i) => (
+                    <StarIcon key={i} className="h-4 w-4" />
+                  ))}
+                </div>
+              </div>
+              <span className="text-sm text-neutral">{review.date}</span>
+            </div>
+            <p className="text-neutral">{review.comment}</p>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="grid md:grid-cols-2 gap-8">
-        {/* Product Images */}
-        <div>
-          <div className="mb-4">
-            <img
-              // src={product.images[selectedImage]}
-              src={product?.image}
-              alt={product.name}
-              className="w-full h-96 object-cover rounded-lg"
-            />
+        {/* Product Image */}
+        <div className="relative group">
+          <img
+            src={product.image}
+            alt={product.name}
+            className="w-full h-96 object-cover rounded-lg shadow-lg transform group-hover:scale-105 transition-transform duration-300"
+          />
+          <div className="absolute top-4 right-4 bg-accent text-white px-3 py-1 rounded-full text-sm">
+            {product.stock} In Stock
           </div>
-          {/* <div className="flex space-x-2">
-            {product.images.map((image, index) => (
-              <img
-                key={index}
-                src={image}
-                alt={`${product.name} view ${index + 1}`}
-                className={`w-20 h-20 object-cover rounded cursor-pointer ${
-                  selectedImage === index ? "border-2 border-primary" : ""
-                }`}
-                onClick={() => setSelectedImage(index)}
-              />
-            ))}
-          </div> */}
         </div>
 
         {/* Product Details */}
         <div>
-          <h1 className="text-3xl font-bold text-neutral mb-2">
+          <h1 className="text-3xl font-bold text-neutral mb-4">
             {product.name}
           </h1>
-          {/* <div className="flex items-center mb-4">
-            <div className="flex text-yellow-500 mr-2">
-              {[...Array(Math.round(averageRating))].map((_, i) => (
-                <StarIcon key={i} className="h-5 w-5" />
-              ))}
-            </div>
-            <span className="text-neutral">
-              ({product.reviews.length} reviews)
-            </span>
-          </div> */}
 
           <p className="text-2xl font-bold text-secondary mb-4">
             ${product.price.toFixed(2)}
           </p>
 
-          <p className="text-neutral mb-4">{product.description}</p>
-
-          {/* Key Features */}
-          <div className="mb-4">
-            <h3 className="font-semibold mb-2">Key Features:</h3>
-            {/* <ul className="list-disc list-inside">
-              {product.features.map((feature, index) => (
-                <li key={index} className="text-neutral">
-                  {feature}
-                </li>
-              ))}
-            </ul> */}
-          </div>
+          <p className="text-neutral mb-6">{product.description}</p>
 
           {/* Specifications */}
-          <div className="mb-4">
+          <div className="mb-6">
             <h3 className="font-semibold mb-2">Specifications:</h3>
             <table className="w-full">
-              {/* <tbody>
-                {Object.entries(product.specifications).map(([key, value]) => (
-                  <tr key={key} className="border-b">
-                    <td className="py-2 text-neutral capitalize">{key}</td>
+              <tbody>
+                {generateSpecifications().map(({ label, value }) => (
+                  <tr key={label} className="border-b">
+                    <td className="py-2 text-neutral capitalize">{label}</td>
                     <td className="py-2">{value}</td>
                   </tr>
                 ))}
-              </tbody> */}
+              </tbody>
             </table>
           </div>
 
           {/* Quantity and Cart */}
-          <div className="flex items-center space-x-4 mb-4">
+          <div className="flex items-center space-x-4 mb-6">
             <div className="flex items-center">
               <button
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
@@ -185,30 +197,14 @@ export default function ProductDetails() {
               <span className="text-sm">Free Shipping</span>
             </div>
             <div className="flex flex-col items-center">
-              <StarIcon className="h-8 w-8 text-secondary mb-2" />
-              <span className="text-sm">Easy Returns</span>
+              <Rocket className="h-8 w-8 text-secondary mb-2" />
+              <span className="text-sm">Fast Delivery</span>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Reviews Section */}
-      {/* <div className="mt-12">
-        <h2 className="text-2xl font-bold mb-4">Customer Reviews</h2>
-        {product.reviews.map((review, index) => (
-          <div key={index} className="bg-base p-4 rounded-lg mb-4">
-            <div className="flex items-center mb-2">
-              <div className="flex text-yellow-500 mr-2">
-                {[...Array(review.rating)].map((_, i) => (
-                  <StarIcon key={i} className="h-5 w-5" />
-                ))}
-              </div>
-              <span className="font-semibold">{review.name}</span>
-            </div>
-            <p>{review.comment}</p>
-          </div>
-        ))}
-      </div> */}
+      <FAQSection />
+      <ReviewSection />
     </div>
   );
 }
