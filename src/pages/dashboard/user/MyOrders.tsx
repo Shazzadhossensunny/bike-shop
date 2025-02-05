@@ -1,5 +1,5 @@
 import { useGetAllOrdersQuery } from "@/redux/features/admin/orderApi";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Package,
   Calendar,
@@ -11,7 +11,6 @@ import {
 
 const MyOrders = () => {
   const { data: orders, isLoading } = useGetAllOrdersQuery(undefined);
-  const navigate = useNavigate();
 
   if (isLoading) {
     return (

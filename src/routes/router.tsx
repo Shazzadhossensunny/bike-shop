@@ -4,9 +4,11 @@ import CartPage from "@/pages/Cart";
 import Checkout from "@/pages/Checkout";
 import Contact from "@/pages/Contact";
 import AddProduct from "@/pages/dashboard/admin/AddProduct";
+import AllOrderList from "@/pages/dashboard/admin/AllOrderList";
 import AllProductList from "@/pages/dashboard/admin/AllProductList";
 import AllUserList from "@/pages/dashboard/admin/AllUserList";
 import ProductUpdate from "@/pages/dashboard/admin/ProductUpdate";
+import SingleOrderDetails from "@/pages/dashboard/admin/SingleOrderDetails";
 import MyOrders from "@/pages/dashboard/user/MyOrders";
 import MyProfile from "@/pages/dashboard/user/MyProfile";
 import OrderDetails from "@/pages/dashboard/user/OrderDetails";
@@ -80,6 +82,14 @@ const router = createBrowserRouter([
       {
         path: "products/:id",
         element: <ProductUpdate />,
+      },
+      {
+        path: "all-order",
+        element: <AllOrderList />,
+      },
+      {
+        path: "all-order/:id",
+        element: <SingleOrderDetails />,
       },
       //users
       {

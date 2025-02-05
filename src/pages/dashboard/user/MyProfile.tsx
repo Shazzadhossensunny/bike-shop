@@ -9,11 +9,15 @@ import toast from "react-hot-toast";
 import { TResponse } from "@/type";
 import { logout } from "@/redux/features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
+import { useDeleteUserByIdMutation } from "@/redux/features/admin/userApi";
+import { useState } from "react";
 
 const MyProfile = () => {
   const id = useAppSelector((state) => state.auth.name?.userId);
-  const { data: myData } = useGetSingleUserQuery(id);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const { data: myData, isLoading: isUserLoading } = useGetSingleUserQuery(id);
   const [changedPassword] = useChangedPasswordMutation();
+  const [deleteUserById] = useDeleteUserByIdMutation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const {
@@ -23,13 +27,14 @@ const MyProfile = () => {
   } = useForm();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log(data);
     try {
       const res = (await changedPassword(data)) as TResponse<any>;
       if (res.error) {
-        toast.error(res.error.data.message);
+        toast.error(res.error.data.message || "Password change failed");
       } else {
-        toast.success("Password changed successfully", { duration: 2000 });
+        toast.success("Password changed successfully. Please log in again.", {
+          duration: 2000,
+        });
         dispatch(logout());
         navigate("/login");
       }
@@ -37,6 +42,42 @@ const MyProfile = () => {
       toast.error("Something went wrong!", { duration: 2000 });
     }
   };
+
+  const handleDeleteAccount = async () => {
+    try {
+      const res = (await deleteUserById(id)) as TResponse<any>;
+
+      if (res.error) {
+        const errorMessage =
+          res.error.data?.message || "Account deletion failed";
+        toast.error(errorMessage, {
+          duration: 2000,
+        });
+        return;
+      }
+
+      // Success scenario
+      toast.success("Your account has been deleted.", {
+        duration: 2000,
+      });
+      dispatch(logout());
+      navigate("/");
+    } catch (error) {
+      toast.error("Something went wrong!", {
+        duration: 4000,
+      });
+    } finally {
+      setIsDeleteModalOpen(false);
+    }
+  };
+
+  if (isUserLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   if (!myData?.data) {
     return (
@@ -52,6 +93,46 @@ const MyProfile = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      {/* Delete Account Modal */}
+      {isDeleteModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full">
+            <h2 className="text-xl font-bold text-neutral mb-4">
+              Confirm Account Deletion
+            </h2>
+            <p className="text-neutral mb-6">
+              Are you sure you want to delete your account? This action cannot
+              be undone.
+            </p>
+            <div className="flex justify-between">
+              <button
+                onClick={() => setIsDeleteModalOpen(false)}
+                className="
+                  px-4 py-2
+                  bg-gray-200
+                  text-neutral
+                  rounded-md
+                  hover:bg-gray-300
+                "
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDeleteAccount}
+                className="
+                  px-4 py-2
+                  bg-red-500
+                  text-white
+                  rounded-md
+                  hover:bg-red-600
+                "
+              >
+                Delete Account
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="max-w-4xl mx-auto grid gap-8 md:grid-cols-2">
         {/* Profile Info Card */}
         <div className="bg-white rounded-lg shadow-lg p-6">
@@ -194,6 +275,27 @@ const MyProfile = () => {
               Update Password
             </button>
           </form>
+          {/* Delete Account Section */}
+          <div className="mt-8 border-t pt-6">
+            <h3 className="text-xl font-bold text-red-500 mb-4">Danger Zone</h3>
+            <button
+              onClick={() => setIsDeleteModalOpen(true)}
+              className="
+                w-full
+                bg-red-500
+                text-white
+                py-2
+                px-4
+                rounded-md
+                hover:bg-red-600
+                transition-colors
+                duration-300
+                font-medium
+              "
+            >
+              Delete Account
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -10,12 +10,14 @@ import {
   ChevronDown,
   ChevronUp,
   Package,
+  ClipboardList,
 } from "lucide-react";
 
 export default function Sidebar() {
   const [isActive, setActive] = useState(true);
   const [isUserDropdownOpen, setUserDropdownOpen] = useState(false);
   const [isProductDropdownOpen, setProductDropdownOpen] = useState(false);
+  const [isOrderDropdownOpen, setOrderDropdownOpen] = useState(false);
   const role = useAppSelector((state) => state.auth.name?.role);
 
   const handleToggle = () => {
@@ -124,18 +126,6 @@ export default function Sidebar() {
                       >
                         All Users
                       </NavLink>
-                      <NavLink
-                        to="/dashboard/delete-user"
-                        className={({ isActive }) =>
-                          `block px-4 py-2 rounded-lg transition-all duration-300 hover:bg-white/20 ${
-                            isActive
-                              ? "bg-white/20 text-white scale-105"
-                              : "text-white/80"
-                          }`
-                        }
-                      >
-                        Delete User
-                      </NavLink>
                     </div>
                   )}
                 </div>
@@ -182,6 +172,49 @@ export default function Sidebar() {
                       >
                         All Products
                       </NavLink>
+                    </div>
+                  )}
+                </div>
+                {/* Order Management Dropdown */}
+                <div className="relative">
+                  <button
+                    onClick={() => setOrderDropdownOpen(!isOrderDropdownOpen)}
+                    className="flex items-center px-4 py-3 my-2 w-full text-left transition-all duration-300 transform rounded-lg hover:bg-white/20 group text-white/80 hover:text-white"
+                  >
+                    <ClipboardList className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
+                    <span className="mx-4 font-medium">Order Management</span>
+                    {isOrderDropdownOpen ? (
+                      <ChevronUp className="ml-auto w-5 h-5" />
+                    ) : (
+                      <ChevronDown className="ml-auto w-5 h-5" />
+                    )}
+                  </button>
+                  {isOrderDropdownOpen && (
+                    <div className="ml-8 space-y-2">
+                      <NavLink
+                        to="/dashboard/all-order"
+                        className={({ isActive }) =>
+                          `block px-4 py-2 rounded-lg transition-all duration-300 hover:bg-white/20 ${
+                            isActive
+                              ? "bg-white/20 text-white scale-105"
+                              : "text-white/80"
+                          }`
+                        }
+                      >
+                        All Order
+                      </NavLink>
+                      {/* <NavLink
+                        to="/dashboard/products"
+                        className={({ isActive }) =>
+                          `block px-4 py-2 rounded-lg transition-all duration-300 hover:bg-white/20 ${
+                            isActive
+                              ? "bg-white/20 text-white scale-105"
+                              : "text-white/80"
+                          }`
+                        }
+                      >
+                        All Products
+                      </NavLink> */}
                     </div>
                   )}
                 </div>

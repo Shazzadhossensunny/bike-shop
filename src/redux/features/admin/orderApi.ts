@@ -30,9 +30,28 @@ const orderAPi = baseApi.injectEndpoints({
         url: `/orders/${orderId}`,
       }),
       providesTags: ["Orders"],
-      transformResponse: (response: TResponseRedux<TOrder>) => response.data,
+      transformResponse: (response: TResponseRedux<any>) => response.data,
+    }),
+    updateOrderStatus: builder.mutation({
+      query: ({ id, ...data }) => ({
+        url: `/orders/${id}/status`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["Orders"],
+    }),
+    deleteOrder: builder.mutation({
+      query: (id) => ({
+        url: `/orders/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Orders"],
     }),
   }),
 });
-export const { useGetSingleOrderByOrderIdQuery, useGetAllOrdersQuery } =
-  orderAPi;
+export const {
+  useGetSingleOrderByOrderIdQuery,
+  useGetAllOrdersQuery,
+  useDeleteOrderMutation,
+  useUpdateOrderStatusMutation,
+} = orderAPi;
