@@ -38,5 +38,6 @@ export type TUser = {
   role: string;
   createdAt: string;
   updatedAt: string;
+  isActive: boolean;
   __v: number;
 };

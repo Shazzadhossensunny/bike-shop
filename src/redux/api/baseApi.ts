@@ -29,11 +29,12 @@ const baseQueryWithRefreshToken: BaseQueryFn<
   let result = await baseQuery(args, api, extraOptions);
 
   if (result?.error?.status === 404) {
-    const errorData = result.error.data as { message: string }; // Assert the type
+    const errorData = result.error.data as { message: string };
     toast.error(errorData.message);
   }
   if (result?.error?.status === 403) {
-    const errorData = result.error.data as { message: string }; // Assert the type
+    const errorData = result.error.data as { message: string };
+    console.log(errorData);
     toast.error(errorData.message);
   }
   //* Check if the request was unauthorized

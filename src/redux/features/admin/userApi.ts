@@ -25,6 +25,14 @@ const userApi = baseApi.injectEndpoints({
         };
       },
     }),
+    toggleStatusUser: builder.mutation({
+      query: (id) => ({
+        url: `/users/toggle-status/${id}`,
+        method: "PATCH",
+      }),
+      transformResponse: (response: TResponseRedux<TUser>) => response.data,
+      invalidatesTags: ["Users"],
+    }),
     deleteUserById: builder.mutation({
       query: (id) => ({
         url: `/users/${id}`,
@@ -36,4 +44,8 @@ const userApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetAllUserQuery, useDeleteUserByIdMutation } = userApi;
+export const {
+  useGetAllUserQuery,
+  useDeleteUserByIdMutation,
+  useToggleStatusUserMutation,
+} = userApi;
