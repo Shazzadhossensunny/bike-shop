@@ -61,8 +61,8 @@ export default function PaymentSuccess() {
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      {orders?.data?.map((order: any) => (
-        <div key={order._id} className="max-w-2xl mx-auto">
+      {orders?.map((order: any) => (
+        <div key={order?._id} className="max-w-2xl mx-auto">
           {/* Success Card */}
           <div className="bg-white rounded-lg shadow-lg overflow-hidden">
             {/* Header */}
@@ -92,7 +92,7 @@ export default function PaymentSuccess() {
               <div className="space-y-4">
                 <div className="flex justify-between items-center border-b pb-4">
                   <span className="text-gray-600 font-medium">Order ID</span>
-                  <span className="text-gray-800">{order._id}</span>
+                  <span className="text-gray-800">{order?._id}</span>
                 </div>
                 <div className="flex justify-between items-center border-b pb-4">
                   <span className="text-gray-600 font-medium">
