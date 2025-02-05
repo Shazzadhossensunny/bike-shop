@@ -25,6 +25,14 @@ const customerApi = baseApi.injectEndpoints({
     //     };
     //   },
     // }),
+
+    getSingleUser: builder.query({
+      query: (id) => ({
+        url: `/users/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["Users"],
+    }),
     registerUser: builder.mutation({
       query: (data) => ({
         url: `/users/register`,
@@ -49,11 +57,21 @@ const customerApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Payments"],
     }),
+    changedPassword: builder.mutation({
+      query: (data) => ({
+        url: `/users/change-password`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Users"],
+    }),
   }),
 });
 
 export const {
+  useGetSingleUserQuery,
   useRegisterUserMutation,
   useCreateOrderMutation,
   useInitiatePaymentMutation,
+  useChangedPasswordMutation,
 } = customerApi;
