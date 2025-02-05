@@ -1,3 +1,5 @@
+import { ProtectedRoute } from "@/components/layout/ProtectedRoute";
+import { USER_ROLE } from "@/constants/user";
 import About from "@/pages/About";
 import AllProduct from "@/pages/AllProduct";
 import CartPage from "@/pages/Cart";
@@ -25,7 +27,7 @@ import { createBrowserRouter } from "react-router-dom";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root></Root>,
+    element: <Root />,
     errorElement: <Error />,
     children: [
       {
@@ -38,19 +40,35 @@ const router = createBrowserRouter([
       },
       {
         path: "/product/:id",
-        element: <ProductDetails />,
+        element: (
+          <ProtectedRoute role={[USER_ROLE.admin, USER_ROLE.customer]}>
+            <ProductDetails />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/cart",
-        element: <CartPage />,
+        element: (
+          <ProtectedRoute role={USER_ROLE.customer}>
+            <CartPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/checkout",
-        element: <Checkout />,
+        element: (
+          <ProtectedRoute role={USER_ROLE.customer}>
+            <Checkout />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/payment-success/:orderId",
-        element: <PaymentSuccess />,
+        element: (
+          <ProtectedRoute role={USER_ROLE.customer}>
+            <PaymentSuccess />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/about",
@@ -64,45 +82,85 @@ const router = createBrowserRouter([
   },
   {
     path: "dashboard",
-    element: <Dashboard />,
+    element: (
+      <ProtectedRoute role={[USER_ROLE.admin, USER_ROLE.customer]}>
+        <Dashboard />
+      </ProtectedRoute>
+    ),
     children: [
       // admin
       {
         path: "all-users",
-        element: <AllUserList />,
+        element: (
+          <ProtectedRoute role={USER_ROLE.admin}>
+            <AllUserList />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "add-product",
-        element: <AddProduct />,
+        element: (
+          <ProtectedRoute role={USER_ROLE.admin}>
+            <AddProduct />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "products",
-        element: <AllProductList />,
+        element: (
+          <ProtectedRoute role={USER_ROLE.admin}>
+            <AllProductList />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "products/:id",
-        element: <ProductUpdate />,
+        element: (
+          <ProtectedRoute role={USER_ROLE.admin}>
+            <ProductUpdate />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "all-order",
-        element: <AllOrderList />,
+        element: (
+          <ProtectedRoute role={USER_ROLE.admin}>
+            <AllOrderList />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "all-order/:id",
-        element: <SingleOrderDetails />,
+        element: (
+          <ProtectedRoute role={USER_ROLE.admin}>
+            <SingleOrderDetails />
+          </ProtectedRoute>
+        ),
       },
       //users
       {
         path: "my-orders",
-        element: <MyOrders />,
+        element: (
+          <ProtectedRoute role={USER_ROLE.customer}>
+            <MyOrders />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "my-orders/:id",
-        element: <OrderDetails />,
+        element: (
+          <ProtectedRoute role={USER_ROLE.customer}>
+            <OrderDetails />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "profile",
-        element: <MyProfile />,
+        element: (
+          <ProtectedRoute role={USER_ROLE.customer}>
+            <MyProfile />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

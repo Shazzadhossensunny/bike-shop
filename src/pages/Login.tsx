@@ -7,12 +7,15 @@ import { verifyToken } from "@/utils/verifyToken";
 import { Lock, Mail } from "lucide-react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [login, { isLoading }] = useLoginMutation();
   const dispatch = useAppDispatch();
+  const location = useLocation();
   const navigate = useNavigate();
+  const from = location.state?.from || "/";
+
   const {
     register,
     handleSubmit,
@@ -34,7 +37,7 @@ export default function Login() {
 
       dispatch(setUser({ user, email, token: result.data.accessToken }));
       toast.success("Logged in successfully!");
-      navigate("/");
+      navigate(from, { replace: true });
     } catch (error) {
       toast.error("Something went wrong!");
     }

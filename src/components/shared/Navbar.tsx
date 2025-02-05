@@ -17,7 +17,7 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.auth.name);
+  const user = useAppSelector((state) => state.auth);
   const totalItems = useAppSelector((state) => state.cart.totalItems);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -106,8 +106,8 @@ export default function Navbar() {
                 {isUserMenuOpen && (
                   <div className="absolute right-0 mt-2 w-64 bg-white border rounded-md shadow-lg z-50">
                     <div className="p-4 border-b">
-                      <p className="text-sm text-neutral">Logged in as:</p>
-                      <p className="text-lg font-semibold">{user.email}</p>
+                      <p className="text-sm text-neutral">Logged in:</p>
+                      <p className="text-lg font-semibold">{user?.email}</p>
                     </div>
                     <div className="py-2">
                       <Link
