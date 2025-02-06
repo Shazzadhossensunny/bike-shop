@@ -1,6 +1,6 @@
 import { ChevronRightIcon } from "@heroicons/react/solid";
 import { Link } from "react-router-dom";
-import bannerImg from "../../../public/banner.png";
+import bannerImg from "../../../src/assets/banner.png";
 
 export default function Banner() {
   return (
@@ -16,7 +16,7 @@ export default function Banner() {
             and style.
           </p>
           <Link
-            to="/products"
+            to="/allProduct"
             className="bg-accent text-white px-6 py-3 rounded-full hover:bg-green-600 transition duration-300 inline-flex items-center group"
           >
             Shop Now

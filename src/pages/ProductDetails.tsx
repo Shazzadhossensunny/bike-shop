@@ -124,6 +124,9 @@ export default function ProductDetails() {
             src={product.image}
             alt={product.name}
             className="w-full h-96 object-cover rounded-lg shadow-lg transform group-hover:scale-105 transition-transform duration-300"
+            onError={(e) => {
+              e.currentTarget.src = "/placeholder-image.svg";
+            }}
           />
           <div className="absolute top-4 right-4 bg-accent text-white px-3 py-1 rounded-full text-sm">
             {product.stock} In Stock

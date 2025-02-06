@@ -1,9 +1,9 @@
 import { HeartIcon, UserGroupIcon } from "@heroicons/react/solid";
 import { Rocket, TrophyIcon } from "lucide-react";
-import workshopImg from "../../public/workshop.jpg";
-import emilyImg from "../../public/emily.jpg";
-import sarahImg from "../../public/sarah.jpg";
-import michelImg from "../../public/michel.jpg";
+import workshopImg from "../../src/assets/workshop.jpg";
+import emilyImg from "../../src/assets/emily.jpg";
+import sarahImg from "../../src/assets/sarah.jpg";
+import michelImg from "../../src/assets/michel.jpg";
 
 export default function About() {
   const teamMembers = [
