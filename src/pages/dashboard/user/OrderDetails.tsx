@@ -70,7 +70,7 @@ export default function OrderDetails() {
           <div className="space-y-4">
             <h2 className="text-lg font-semibold text-neutral">Products</h2>
             <div className="divide-y">
-              {order?.products.map((product) => (
+              {order?.products.map((product: any) => (
                 <div
                   key={product._id}
                   className="py-4 flex justify-between items-center"

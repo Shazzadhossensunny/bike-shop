@@ -54,7 +54,7 @@ const MyOrders = () => {
             <div className="p-4 space-y-4">
               {/* Products */}
               <div className="space-y-2">
-                {order.products.map((product) => (
+                {order.products.map((product: any) => (
                   <div
                     key={product._id}
                     className="flex justify-between items-center"

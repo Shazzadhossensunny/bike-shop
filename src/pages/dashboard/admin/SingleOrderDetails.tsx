@@ -12,9 +12,13 @@ import {
 } from "lucide-react";
 import { format } from "date-fns";
 import LoadingSpinner from "@/components/shared/LoadingSpinner";
+import React from "react";
 
 // Status configurations
-const STATUS_CONFIG = {
+const STATUS_CONFIG: Record<
+  "pending" | "processing" | "confirmed" | "cancelled" | "delivered",
+  { icon: React.FC<any>; color: string; bgColor: string }
+> = {
   pending: {
     icon: Clock,
     color: "text-yellow-500",
@@ -66,9 +70,11 @@ export default function SingleOrderDetails() {
     user,
   } = orderData;
 
-  const StatusIcon = STATUS_CONFIG[status]?.icon || Clock;
-  const statusColor = STATUS_CONFIG[status]?.color || "text-gray-500";
-  const statusBgColor = STATUS_CONFIG[status]?.bgColor || "bg-gray-100";
+  const statusKey = status as keyof typeof STATUS_CONFIG;
+  const StatusIcon = STATUS_CONFIG[statusKey]?.icon || Clock;
+  const statusColor = STATUS_CONFIG[statusKey]?.color || "text-gray-500";
+  const statusBgColor = STATUS_CONFIG[statusKey]?.bgColor || "bg-gray-100";
+
   return (
     <div className="container mx-auto px-4 py-8">
       <button
@@ -137,7 +143,7 @@ export default function SingleOrderDetails() {
               </tr>
             </thead>
             <tbody>
-              {products.map((product) => (
+              {products.map((product: any) => (
                 <tr key={product._id} className="border-b">
                   <td className="p-2">
                     <div className="flex items-center">

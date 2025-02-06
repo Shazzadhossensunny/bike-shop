@@ -21,7 +21,7 @@ interface CheckoutFormData {
 
 export default function Checkout() {
   const navigate = useNavigate();
-  const { items, totalItems } = useAppSelector((state) => state.cart);
+  const { items } = useAppSelector((state) => state.cart);
   const user = useAppSelector((state) => state.auth.name);
   const dispatch = useAppDispatch();
 

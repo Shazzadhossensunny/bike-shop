@@ -1,5 +1,6 @@
 import { baseApi } from "@/redux/api/baseApi";
-import { TOrder, TQueryParam, TResponseRedux } from "@/type";
+import { TQueryParam, TResponseRedux } from "@/type";
+import { TOrder } from "@/type/order.type";
 
 const orderAPi = baseApi.injectEndpoints({
   endpoints: (builder) => ({

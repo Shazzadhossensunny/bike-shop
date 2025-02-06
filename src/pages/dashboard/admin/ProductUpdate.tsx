@@ -1,8 +1,9 @@
 import LoadingSpinner from "@/components/shared/LoadingSpinner";
 import {
-  useGetAllProductQuery,
+  useGetProductDetailsQuery,
   useUpdateProductByIdMutation,
 } from "@/redux/features/admin/productApi";
+
 import { TResponse } from "@/type";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -10,10 +11,12 @@ import { useParams } from "react-router-dom";
 
 export default function ProductUpdate() {
   const { id } = useParams();
-  const { data: products } = useGetAllProductQuery(undefined);
+  const { data: products } = useGetProductDetailsQuery(id);
+
+  console.log(products);
   const [updateProductById, { isLoading }] = useUpdateProductByIdMutation();
   const { register, handleSubmit } = useForm();
-  const findProductById = products?.data?.find((product) => product._id === id);
+  // const findProductById = products?.data?.find((product) => product._id === id);
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const productData = {
       id,
@@ -47,7 +50,7 @@ export default function ProductUpdate() {
               Product Name
             </label>
             <input
-              defaultValue={findProductById?.name}
+              defaultValue={products?.name}
               type="text"
               {...register("name")}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
@@ -58,7 +61,7 @@ export default function ProductUpdate() {
               Brand Name
             </label>
             <input
-              defaultValue={findProductById?.brand}
+              defaultValue={products?.brand}
               type="text"
               {...register("brand")}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
@@ -69,7 +72,7 @@ export default function ProductUpdate() {
               Price
             </label>
             <input
-              defaultValue={findProductById?.price}
+              defaultValue={products?.price}
               type="number"
               {...register("price")}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
@@ -80,7 +83,7 @@ export default function ProductUpdate() {
               Model
             </label>
             <input
-              defaultValue={findProductById?.model}
+              defaultValue={products?.model}
               type="text"
               {...register("model")}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
@@ -91,7 +94,7 @@ export default function ProductUpdate() {
               Stock
             </label>
             <input
-              defaultValue={findProductById?.stock}
+              defaultValue={products?.stock}
               type="number"
               {...register("stock")}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
@@ -102,7 +105,7 @@ export default function ProductUpdate() {
               Category
             </label>
             <input
-              defaultValue={findProductById?.category}
+              defaultValue={products?.category}
               type="text"
               {...register("category")}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
@@ -113,7 +116,7 @@ export default function ProductUpdate() {
               Description
             </label>
             <textarea
-              defaultValue={findProductById?.description}
+              defaultValue={products?.description}
               {...register("description")}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
             />
@@ -123,7 +126,7 @@ export default function ProductUpdate() {
               Image URL
             </label>
             <input
-              defaultValue={findProductById?.image}
+              defaultValue={products?.image}
               type="text"
               {...register("image")}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
