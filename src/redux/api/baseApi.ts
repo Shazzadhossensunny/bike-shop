@@ -28,6 +28,10 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 > = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
 
+  if (result?.error?.status === 400) {
+    const errorData = result.error.data as { message: string };
+    toast.error(errorData.message);
+  }
   if (result?.error?.status === 401) {
     const errorData = result.error.data as { message: string };
     toast.error(errorData.message);

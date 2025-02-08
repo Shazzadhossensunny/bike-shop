@@ -1,4 +1,7 @@
-import { useGetAllOrdersQuery } from "@/redux/features/admin/orderApi";
+import {
+  useDeleteOrderMutation,
+  useGetAllOrdersQuery,
+} from "@/redux/features/admin/orderApi";
 import { Link } from "react-router-dom";
 import {
   Package,
@@ -8,14 +11,31 @@ import {
   ExternalLink,
   Trash2,
 } from "lucide-react";
+import LoadingSpinner from "@/components/shared/LoadingSpinner";
+import toast from "react-hot-toast";
 
 const MyOrders = () => {
-  const { data: orders, isLoading } = useGetAllOrdersQuery(undefined);
+  const { data: orders, refetch, isLoading } = useGetAllOrdersQuery(undefined);
+  const [deleteOrder] = useDeleteOrderMutation();
 
+  //   Handler for deleting an order
+  const handleDeleteOrder = async (orderId: string) => {
+    try {
+      const res = await deleteOrder(orderId).unwrap();
+      if (res.error) {
+        toast.error(res.error.data.message || "Failed to delete");
+      } else {
+        toast.success("Order deleted successfully");
+        refetch();
+      }
+    } catch (error: any) {
+      toast.error(error?.data?.message || "Something went wrong!");
+    }
+  };
   if (isLoading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary"></div>
+        <LoadingSpinner />
       </div>
     );
   }
@@ -114,7 +134,11 @@ const MyOrders = () => {
                   View Details
                 </Link>
                 {order.status === "pending" && (
-                  <button className="flex items-center gap-2 text-red-500 hover:text-red-600 transition-colors">
+                  <button
+                    onClick={() => handleDeleteOrder(order._id)}
+                    title="Delete Order"
+                    className="flex items-center gap-2 text-red-500 hover:text-red-600 transition-colors"
+                  >
                     <Trash2 className="h-4 w-4" />
                     Cancel Order
                   </button>
