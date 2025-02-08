@@ -1,5 +1,6 @@
 import { addToCart } from "@/redux/features/cart/cartSlice";
 import { useAppDispatch } from "@/redux/hook";
+import toast from "react-hot-toast";
 
 export default function AddToCartButton({ product }: any) {
   const dispatch = useAppDispatch();
@@ -13,6 +14,7 @@ export default function AddToCartButton({ product }: any) {
         imageUrl: product.image,
       })
     );
+    toast.success(`${product.name} add to cart successfully`);
   };
 
   return (
