@@ -21,46 +21,23 @@ interface CheckoutFormData {
 
 export default function Checkout() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { items } = useAppSelector((state) => state.cart);
   const user = useAppSelector((state) => state.auth.name);
-  const dispatch = useAppDispatch();
 
-  // Check for admin access and redirect
-  useEffect(() => {
-    if (user?.role === "admin") {
-      toast.error(
-        "Administrators cannot place orders. Please use a customer account."
-      );
-      navigate("/");
-      return;
-    }
-  }, [user?.role, navigate]);
-
-  // Redirect if user is not logged in
   useEffect(() => {
     if (!user) {
-      toast.error("Please log in to complete your purchase", {
-        duration: 4000,
-        icon: "🔒",
-      });
+      toast.error("Please log in to complete your purchase", { icon: "🔒" });
       navigate("/login");
-    }
-  }, [user, navigate]);
-
-  // Redirect if cart is empty with message
-  useEffect(() => {
-    if (items.length === 0) {
-      toast.error("Your cart is empty. Add some items before checkout!", {
-        duration: 3000,
-        icon: "🛒",
-      });
+    } else if (user.role === "admin") {
+      toast.error("Administrators cannot place orders.", { icon: "⛔" });
+      navigate("/");
+    } else if (items.length === 0) {
+      toast.error("Your cart is empty!", { icon: "🛒" });
       navigate("/cart");
     }
-  }, [items, navigate]);
+  }, [user, items, navigate]);
 
-  if (!user || items.length === 0 || user?.role === "admin") {
-    return null;
-  }
   const [createOrder, { isLoading: isCreating }] = useCreateOrderMutation();
   const [initiatePayment, { isLoading: isProcessingPayment }] =
     useInitiatePaymentMutation();
@@ -100,12 +77,10 @@ export default function Checkout() {
 
       // Order created successfully
       toast.success("Order created successfully!", {
-        duration: 3000,
         icon: "✅",
       });
       // Initiate payment
 
-      // console.log("orderid", orderResponse.data._id);
       const paymentResponse = await initiatePayment({
         id: orderResponse.data._id,
         name: `${data.firstName} ${data.lastName}`,
@@ -118,25 +93,29 @@ export default function Checkout() {
 
       // Dismiss the loading toast
       toast.dismiss(loadingToast);
-      // console.log(paymentResponse);
-      // console.log(paymentResponse.data.paymentUrl);
+
       if (paymentResponse.data.paymentUrl) {
         dispatch(clearCart());
         toast.success("Redirecting to payment...", { duration: 2000 });
-        // Ensure cart is cleared before redirect
+
         setTimeout(() => {
-          // Method 1: Direct window location
-          window.location.href = paymentResponse.data.paymentUrl;
-        }, 1500);
+          const newTab = window.open(paymentResponse.data.paymentUrl, "_blank");
+
+          if (!newTab) {
+            // Fallback if the browser blocks new tabs
+            window.location.href = paymentResponse.data.paymentUrl;
+          }
+
+          return;
+        }, 1000);
       }
     } catch (error: any) {
-      // Dismiss the loading toast
       toast.dismiss(loadingToast);
 
       // Handle specific error cases
       if (error.status === 401) {
         toast.error("Your session has expired. Please log in again.", {
-          duration: 4000,
+          duration: 2000,
           icon: "⚠️",
         });
         navigate("/login");
@@ -145,12 +124,12 @@ export default function Checkout() {
 
       if (error.data?.message) {
         toast.error(error.data.message, {
-          duration: 4000,
+          duration: 2000,
           icon: "❌",
         });
       } else {
         toast.error("Something went wrong. Please try again later.", {
-          duration: 4000,
+          duration: 2000,
           icon: "❌",
         });
       }
@@ -248,7 +227,9 @@ export default function Checkout() {
               <div>
                 <label className="block mb-2">Address</label>
                 <input
-                  {...register("address", { required: "Address is required" })}
+                  {...register("address", {
+                    required: "Address is required",
+                  })}
                   className="w-full p-2 border rounded-md"
                   placeholder="123 Main St"
                 />
