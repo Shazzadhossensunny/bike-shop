@@ -147,7 +147,7 @@ export default function SingleOrderDetails() {
                 <tr key={product._id} className="border-b">
                   <td className="p-2">
                     <div className="flex items-center">
-                      <div className="mr-4">
+                      {/* <div className="mr-4">
                         <img
                           src={
                             product.productId.image ||
@@ -156,7 +156,7 @@ export default function SingleOrderDetails() {
                           alt={product.name}
                           className="w-16 h-16 object-cover rounded"
                         />
-                      </div>
+                      </div> */}
                       <div>
                         <p className="font-semibold">{product.name}</p>
                         <p className="text-sm text-gray-500">
