@@ -5,11 +5,21 @@ import { ChevronDownIcon, ChevronUpIcon, Rocket, StarIcon } from "lucide-react";
 import AddToCartButton from "@/components/shared/AddToCartbutton";
 import { useGetProductDetailsQuery } from "@/redux/features/admin/productApi";
 import LoadingSpinner from "@/components/shared/LoadingSpinner";
+import { updateQuantity } from "@/redux/features/cart/cartSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
 
 export default function ProductDetails() {
   const { id } = useParams();
   const { data: product } = useGetProductDetailsQuery(id);
-  const [quantity, setQuantity] = useState(1);
+  const [localQuantity, setLocalQuantity] = useState(1);
+
+  const dispatch = useAppDispatch();
+  const cartItems = useAppSelector((state) => state.cart.items);
+  console.log(cartItems);
+
+  // Find if product exists in cart
+  const cartItem = cartItems.find((item) => item.id === product?._id);
+  const currentQuantity = cartItem ? cartItem.quantity : localQuantity;
 
   if (!product)
     return (
@@ -164,29 +174,38 @@ export default function ProductDetails() {
           <div className="flex items-center space-x-4 mb-6">
             <div className="flex items-center">
               <button
-                onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className="bg-base p-2 rounded-l"
+                onClick={() =>
+                  dispatch(
+                    updateQuantity({
+                      id: product?._id,
+                      quantity: Math.max(1, currentQuantity - 1),
+                    })
+                  )
+                }
+                className="bg-gray-200 px-3 py-1 rounded-md text-lg"
               >
                 -
               </button>
-              <input
-                type="number"
-                value={quantity}
-                onChange={(e) => setQuantity(Number(e.target.value))}
-                min="1"
-                max={product.stock}
-                className="w-16 text-center"
-              />
+              <span className="px-4 py-1 text-center min-w-[40px]">
+                {currentQuantity}
+              </span>
               <button
                 onClick={() =>
-                  setQuantity(Math.min(product.stock, quantity + 1))
+                  dispatch(
+                    updateQuantity({
+                      id: product?._id,
+                      quantity: currentQuantity + 1,
+                    })
+                  )
                 }
-                className="bg-base p-2 rounded-r"
+                className="bg-gray-200 px-3 py-1 rounded-md text-lg"
               >
                 +
               </button>
             </div>
-            <AddToCartButton product={product} />
+            <AddToCartButton
+              product={{ ...product, quantity: currentQuantity }}
+            />
           </div>
 
           {/* Product Guarantees */}

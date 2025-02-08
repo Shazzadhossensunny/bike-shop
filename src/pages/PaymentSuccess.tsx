@@ -2,6 +2,7 @@ import { useLocation } from "react-router-dom";
 import { useGetSingleOrderByOrderIdQuery } from "@/redux/features/admin/orderApi";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
+import LoadingSpinner from "@/components/shared/LoadingSpinner";
 
 export default function PaymentSuccess() {
   const location = useLocation();
@@ -25,10 +26,7 @@ export default function PaymentSuccess() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-pulse text-center">
-          <div className="h-8 w-64 bg-gray-200 rounded mb-4"></div>
-          <div className="h-4 w-48 bg-gray-200 rounded"></div>
-        </div>
+        <LoadingSpinner />
       </div>
     );
   }
@@ -62,7 +60,7 @@ export default function PaymentSuccess() {
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       {orders?.map((order: any) => (
-        <div key={order?._id} className="max-w-2xl mx-auto">
+        <div key={order?._id} className="max-w-2xl mx-auto mb-5">
           {/* Success Card */}
           <div className="bg-white rounded-lg shadow-lg overflow-hidden">
             {/* Header */}
