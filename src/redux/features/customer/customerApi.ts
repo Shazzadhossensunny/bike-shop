@@ -24,7 +24,7 @@ const customerApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["Orders"],
+      invalidatesTags: ["Products"],
     }),
     initiatePayment: builder.mutation({
       query: ({ id, ...data }) => ({

@@ -52,6 +52,7 @@ const productApi = baseApi.injectEndpoints({
         providesTags: ["Products"],
       }),
       transformResponse: (response: TResponseRedux<TProduct>) => response.data,
+      providesTags: ["Products"],
     }),
     updateProductById: builder.mutation({
       query: ({ id, ...data }) => ({

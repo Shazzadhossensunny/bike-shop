@@ -15,7 +15,6 @@ export default function ProductDetails() {
 
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector((state) => state.cart.items);
-  console.log(cartItems);
 
   // Find if product exists in cart
   const cartItem = cartItems.find((item) => item.id === product?._id);
