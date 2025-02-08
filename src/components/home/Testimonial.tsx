@@ -32,8 +32,8 @@ export default function Testimonial() {
     return () => clearInterval(testimonialInterval);
   }, []);
   return (
-    <section className="bg-white py-16 px-4">
-      <div className="max-w-7xl mx-auto text-center">
+    <section className="bg-white py-16">
+      <div className="container mx-auto px-4 text-center">
         <h2 className="text-3xl font-bold mb-10 text-neutral">
           What Our Riders Say
         </h2>

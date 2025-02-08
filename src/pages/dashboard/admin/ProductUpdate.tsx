@@ -46,90 +46,234 @@ export default function ProductUpdate() {
         </h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-neutral">
+            <label className="block text-sm font-medium text-neutral mb-2">
               Product Name
             </label>
             <input
               defaultValue={products?.name}
               type="text"
               {...register("name")}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
+              className="
+                pl-2
+                pr-2
+                py-2
+                block
+                w-full
+                rounded-md
+                border
+                border-gray-300
+                shadow-sm
+                focus:border-blue-500
+                focus:ring
+                focus:ring-blue-500
+                focus:ring-opacity-50
+                transition-all
+                duration-300
+                text-gray-900
+                placeholder-gray-400
+              "
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-neutral">
+            <label className="block text-sm font-medium text-neutral mb-2">
               Brand Name
             </label>
             <input
               defaultValue={products?.brand}
               type="text"
               {...register("brand")}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
+              className="
+                pl-2
+                pr-2
+                py-2
+                block
+                w-full
+                rounded-md
+                border
+                border-gray-300
+                shadow-sm
+                focus:border-blue-500
+                focus:ring
+                focus:ring-blue-500
+                focus:ring-opacity-50
+                transition-all
+                duration-300
+                text-gray-900
+                placeholder-gray-400
+              "
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-neutral">
+            <label className="block text-sm font-medium text-neutral mb-2">
               Price
             </label>
             <input
               defaultValue={products?.price}
               type="number"
               {...register("price")}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
+              className="
+                pl-2
+                pr-2
+                py-2
+                block
+                w-full
+                rounded-md
+                border
+                border-gray-300
+                shadow-sm
+                focus:border-blue-500
+                focus:ring
+                focus:ring-blue-500
+                focus:ring-opacity-50
+                transition-all
+                duration-300
+                text-gray-900
+                placeholder-gray-400
+              "
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-neutral">
+            <label className="block text-sm font-medium text-neutral mb-2">
               Model
             </label>
             <input
               defaultValue={products?.model}
               type="text"
               {...register("model")}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
+              className="
+                pl-2
+                pr-2
+                py-2
+                block
+                w-full
+                rounded-md
+                border
+                border-gray-300
+                shadow-sm
+                focus:border-blue-500
+                focus:ring
+                focus:ring-blue-500
+                focus:ring-opacity-50
+                transition-all
+                duration-300
+                text-gray-900
+                placeholder-gray-400
+              "
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-neutral">
+            <label className="block text-sm font-medium text-neutral mb-2">
               Stock
             </label>
             <input
               defaultValue={products?.stock}
               type="number"
               {...register("stock")}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
+              className="
+                pl-2
+                pr-2
+                py-2
+                block
+                w-full
+                rounded-md
+                border
+                border-gray-300
+                shadow-sm
+                focus:border-blue-500
+                focus:ring
+                focus:ring-blue-500
+                focus:ring-opacity-50
+                transition-all
+                duration-300
+                text-gray-900
+                placeholder-gray-400
+              "
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-neutral">
+            <label className="block text-sm font-medium text-neutral mb-2">
               Category
             </label>
             <input
               defaultValue={products?.category}
               type="text"
               {...register("category")}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
+              className="
+                pl-2
+                pr-2
+                py-2
+                block
+                w-full
+                rounded-md
+                border
+                border-gray-300
+                shadow-sm
+                focus:border-blue-500
+                focus:ring
+                focus:ring-blue-500
+                focus:ring-opacity-50
+                transition-all
+                duration-300
+                text-gray-900
+                placeholder-gray-400
+              "
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-neutral">
+            <label className="block text-sm font-medium text-neutral mb-2">
               Description
             </label>
             <textarea
               defaultValue={products?.description}
               {...register("description")}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
+              className="
+                pl-2
+                pr-2
+                py-2
+                block
+                w-full
+                rounded-md
+                border
+                border-gray-300
+                shadow-sm
+                focus:border-blue-500
+                focus:ring
+                focus:ring-blue-500
+                focus:ring-opacity-50
+                transition-all
+                duration-300
+                text-gray-900
+                placeholder-gray-400
+              "
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-neutral">
+            <label className="block text-sm font-medium text-neutral mb-2">
               Image URL
             </label>
             <input
               defaultValue={products?.image}
               type="text"
               {...register("image")}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
+              className="
+                pl-2
+                pr-2
+                py-2
+                block
+                w-full
+                rounded-md
+                border
+                border-gray-300
+                shadow-sm
+                focus:border-blue-500
+                focus:ring
+                focus:ring-blue-500
+                focus:ring-opacity-50
+                transition-all
+                duration-300
+                text-gray-900
+                placeholder-gray-400
+              "
             />
           </div>
           <button

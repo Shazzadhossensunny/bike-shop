@@ -120,7 +120,7 @@ const MyOrders = () => {
                   Total Amount:
                 </span>
                 <span className="text-lg font-bold text-primary">
-                  ৳{order.totalAmount.toLocaleString()}
+                  {order.totalAmount.toLocaleString()} Tk
                 </span>
               </div>
 

@@ -42,7 +42,7 @@ export default function CartPage() {
               />
               <div className="flex-1">
                 <h3 className="text-lg font-semibold">{item.name}</h3>
-                <p className="text-gray-600">${item.price.toFixed(2)}</p>
+                <p className="text-gray-600">{item.price.toFixed(2)} Tk</p>
               </div>
               <div className="flex items-center gap-2">
                 <button
@@ -87,7 +87,7 @@ export default function CartPage() {
       {items.length > 0 && (
         <div className="text-right mt-6">
           <p className="text-xl font-bold">
-            Total: ${calculateTotal().toFixed(2)}
+            Total: {calculateTotal().toFixed(2)} Tk
           </p>
           <Link
             to="/checkout"

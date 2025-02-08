@@ -82,7 +82,7 @@ export default function OrderDetails() {
                     </p>
                   </div>
                   <span className="font-semibold text-primary">
-                    ৳{product.price.toLocaleString()}
+                    {product.price.toLocaleString()} Tk
                   </span>
                 </div>
               ))}
@@ -142,7 +142,7 @@ export default function OrderDetails() {
             <div className="flex justify-between items-center text-lg">
               <span className="font-semibold text-neutral">Total Amount:</span>
               <span className="font-bold text-primary">
-                ৳{order?.totalAmount.toLocaleString()}
+                {order?.totalAmount.toLocaleString()} Tk
               </span>
             </div>
           </div>

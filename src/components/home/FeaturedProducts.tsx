@@ -6,8 +6,8 @@ export default function FeaturedProducts() {
   const { data: featuredProducts, isLoading } =
     useGetFeaturedProductsQuery(undefined);
   return (
-    <section className="py-16 px-4">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-16">
+      <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-10 text-neutral">
           Featured Bikes
         </h2>
@@ -29,7 +29,9 @@ export default function FeaturedProducts() {
                     className="w-full h-40 object-cover mb-4 rounded"
                   />
                   <h3 className="font-semibold text-neutral">{product.name}</h3>
-                  <p className="text-secondary">${product.price.toFixed(2)}</p>
+                  <p className="text-secondary">
+                    {product.price.toFixed(2)} Tk
+                  </p>
                   <Link
                     to={`/product/${product._id}`}
                     className="mt-2 inline-block bg-primary text-white px-3 py-1 rounded hover:bg-blue-700"

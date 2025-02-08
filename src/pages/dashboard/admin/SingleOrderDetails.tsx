@@ -167,7 +167,7 @@ export default function SingleOrderDetails() {
                   </td>
                   <td className="p-2 text-center">{product.quantity}</td>
                   <td className="p-2 text-right">
-                    {product.price * product.quantity} BDT
+                    {product.price * product.quantity} Tk
                   </td>
                 </tr>
               ))}
@@ -211,7 +211,7 @@ export default function SingleOrderDetails() {
             <div className="space-y-2">
               <div className="flex justify-between">
                 <span>Total Amount:</span>
-                <strong>{totalAmount} BDT</strong>
+                <strong>{totalAmount} Tk</strong>
               </div>
               <div className="flex justify-between">
                 <span>Order Date:</span>

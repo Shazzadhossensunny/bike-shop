@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export default function CallToAction() {
   return (
     <section className="bg-secondary text-white py-16 px-4">
-      <div className="max-w-7xl mx-auto text-center">
+      <div className="container mx-auto px-4 text-center">
         <h2 className="text-4xl font-bold mb-6">
           Ready to Find Your Perfect Ride?
         </h2>

@@ -297,14 +297,14 @@ export default function Checkout() {
                 <h3 className="font-semibold">{item.name}</h3>
                 <p className="text-gray-600">Quantity: {item.quantity}</p>
                 <p className="font-medium">
-                  ${(item.price * item.quantity).toFixed(2)}
+                  {(item.price * item.quantity).toFixed(2)} Tk
                 </p>
               </div>
             </div>
           ))}
           <div className="flex justify-between font-bold text-lg pt-2 border-t">
             <span>Total</span>
-            <span>${calculateTotal().toFixed(2)}</span>
+            <span>{calculateTotal().toFixed(2)} Tk</span>
           </div>
         </div>
       </div>

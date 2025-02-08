@@ -299,7 +299,7 @@ export default function AdvancedProductList() {
                         {product.model}
                       </p>
                       <p className="text-blue-600 font-bold text-xl mb-3">
-                        ${product.price.toFixed(2)}
+                        {product.price.toFixed(2)} Tk
                       </p>
                       <div className="flex flex-wrap gap-2 mb-4">
                         <span className="bg-gray-100 px-2 py-1 rounded text-sm text-gray-600">

@@ -149,7 +149,7 @@ export default function ProductDetails() {
           </h1>
 
           <p className="text-2xl font-bold text-secondary mb-4">
-            ${product.price.toFixed(2)}
+            {product.price.toFixed(2)} Tk
           </p>
 
           <p className="text-neutral mb-6">{product.description}</p>

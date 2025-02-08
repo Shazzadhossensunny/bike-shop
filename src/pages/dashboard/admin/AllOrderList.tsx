@@ -133,7 +133,7 @@ export default function AdminOrderManagement() {
                 >
                   <td className="p-3 font-medium">{order.paymentOrderId}</td>
                   <td className="p-3">{order.user.name}</td>
-                  <td className="p-3">{order.totalAmount} BDT</td>
+                  <td className="p-3">{order.totalAmount} Tk</td>
                   <td className="p-3">
                     {renderStatusBadge(order.paymentStatus as TStatus)}
                   </td>

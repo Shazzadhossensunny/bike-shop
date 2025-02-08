@@ -40,13 +40,31 @@ export default function AddProduct() {
         </h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-neutral">
+            <label className="block text-sm font-medium text-neutral mb-2">
               Product Name
             </label>
             <input
               type="text"
               {...register("name", { required: "Product name is required" })}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
+              className="
+                pl-2
+                pr-2
+                py-2
+                block
+                w-full
+                rounded-md
+                border
+                border-gray-300
+                shadow-sm
+                focus:border-blue-500
+                focus:ring
+                focus:ring-blue-500
+                focus:ring-opacity-50
+                transition-all
+                duration-300
+                text-gray-900
+                placeholder-gray-400
+              "
             />
             {errors.name && (
               <p className="text-red-500 text-sm mt-1">
@@ -55,13 +73,31 @@ export default function AddProduct() {
             )}
           </div>
           <div>
-            <label className="block text-sm font-medium text-neutral">
+            <label className="block text-sm font-medium text-neutral mb-2">
               Brand Name
             </label>
             <input
               type="text"
               {...register("brand", { required: "Brand name is required" })}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
+              className="
+                pl-2
+                pr-2
+                py-2
+                block
+                w-full
+                rounded-md
+                border
+                border-gray-300
+                shadow-sm
+                focus:border-blue-500
+                focus:ring
+                focus:ring-blue-500
+                focus:ring-opacity-50
+                transition-all
+                duration-300
+                text-gray-900
+                placeholder-gray-400
+              "
             />
             {errors.brand && (
               <p className="text-red-500 text-sm mt-1">
@@ -70,13 +106,31 @@ export default function AddProduct() {
             )}
           </div>
           <div>
-            <label className="block text-sm font-medium text-neutral">
+            <label className="block text-sm font-medium text-neutral mb-2">
               Price
             </label>
             <input
               type="number"
               {...register("price", { required: "Price is required" })}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
+              className="
+                pl-2
+                pr-2
+                py-2
+                block
+                w-full
+                rounded-md
+                border
+                border-gray-300
+                shadow-sm
+                focus:border-blue-500
+                focus:ring
+                focus:ring-blue-500
+                focus:ring-opacity-50
+                transition-all
+                duration-300
+                text-gray-900
+                placeholder-gray-400
+              "
             />
             {errors.price && (
               <p className="text-red-500 text-sm mt-1">
@@ -85,13 +139,31 @@ export default function AddProduct() {
             )}
           </div>
           <div>
-            <label className="block text-sm font-medium text-neutral">
+            <label className="block text-sm font-medium text-neutral mb-2">
               Model
             </label>
             <input
               type="text"
               {...register("model", { required: "Model is required" })}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
+              className="
+                pl-2
+                pr-2
+                py-2
+                block
+                w-full
+                rounded-md
+                border
+                border-gray-300
+                shadow-sm
+                focus:border-blue-500
+                focus:ring
+                focus:ring-blue-500
+                focus:ring-opacity-50
+                transition-all
+                duration-300
+                text-gray-900
+                placeholder-gray-400
+              "
             />
             {errors.model && (
               <p className="text-red-500 text-sm mt-1">
@@ -100,13 +172,31 @@ export default function AddProduct() {
             )}
           </div>
           <div>
-            <label className="block text-sm font-medium text-neutral">
+            <label className="block text-sm font-medium text-neutral mb-2">
               Stock
             </label>
             <input
               type="number"
               {...register("stock", { required: "Stock is required" })}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
+              className="
+                pl-2
+                pr-2
+                py-2
+                block
+                w-full
+                rounded-md
+                border
+                border-gray-300
+                shadow-sm
+                focus:border-blue-500
+                focus:ring
+                focus:ring-blue-500
+                focus:ring-opacity-50
+                transition-all
+                duration-300
+                text-gray-900
+                placeholder-gray-400
+              "
             />
             {errors.stock && (
               <p className="text-red-500 text-sm mt-1">
@@ -115,13 +205,31 @@ export default function AddProduct() {
             )}
           </div>
           <div>
-            <label className="block text-sm font-medium text-neutral">
+            <label className="block text-sm font-medium text-neutral mb-2">
               Category
             </label>
             <input
               type="text"
               {...register("category", { required: "Category is required" })}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
+              className="
+                pl-2
+                pr-2
+                py-2
+                block
+                w-full
+                rounded-md
+                border
+                border-gray-300
+                shadow-sm
+                focus:border-blue-500
+                focus:ring
+                focus:ring-blue-500
+                focus:ring-opacity-50
+                transition-all
+                duration-300
+                text-gray-900
+                placeholder-gray-400
+              "
             />
             {errors.category && (
               <p className="text-red-500 text-sm mt-1">
@@ -130,14 +238,32 @@ export default function AddProduct() {
             )}
           </div>
           <div>
-            <label className="block text-sm font-medium text-neutral">
+            <label className="block text-sm font-medium text-neutral mb-2">
               Description
             </label>
             <textarea
               {...register("description", {
                 required: "Description is required",
               })}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
+              className="
+                pl-2
+                pr-2
+                py-2
+                block
+                w-full
+                rounded-md
+                border
+                border-gray-300
+                shadow-sm
+                focus:border-blue-500
+                focus:ring
+                focus:ring-blue-500
+                focus:ring-opacity-50
+                transition-all
+                duration-300
+                text-gray-900
+                placeholder-gray-400
+              "
             />
             {errors.description && (
               <p className="text-red-500 text-sm mt-1">
@@ -146,13 +272,31 @@ export default function AddProduct() {
             )}
           </div>
           <div>
-            <label className="block text-sm font-medium text-neutral">
+            <label className="block text-sm font-medium text-neutral mb-2">
               Image URL
             </label>
             <input
               type="text"
               {...register("image", { required: "Image URL is required" })}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
+              className="
+                pl-2
+                pr-2
+                py-2
+                block
+                w-full
+                rounded-md
+                border
+                border-gray-300
+                shadow-sm
+                focus:border-blue-500
+                focus:ring
+                focus:ring-blue-500
+                focus:ring-opacity-50
+                transition-all
+                duration-300
+                text-gray-900
+                placeholder-gray-400
+              "
             />
             {errors.image && (
               <p className="text-red-500 text-sm mt-1">
