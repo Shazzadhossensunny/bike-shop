@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hook";
 export default function ProductDetails() {
   const { id } = useParams();
   const { data: product } = useGetProductDetailsQuery(id);
-  const [localQuantity, setLocalQuantity] = useState(1);
+  const [localQuantity] = useState(1);
 
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector((state) => state.cart.items);
