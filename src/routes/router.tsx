@@ -3,6 +3,8 @@ import { USER_ROLE } from "@/constants/user";
 import About from "@/pages/About";
 import AllProduct from "@/pages/AllProduct";
 import CartPage from "@/pages/Cart";
+import Category from "@/pages/Category";
+import CategoryProducts from "@/pages/CategoryProducts";
 import Checkout from "@/pages/Checkout";
 import Contact from "@/pages/Contact";
 import AddProduct from "@/pages/dashboard/admin/AddProduct";
@@ -11,6 +13,7 @@ import AllProductList from "@/pages/dashboard/admin/AllProductList";
 import AllUserList from "@/pages/dashboard/admin/AllUserList";
 import ProductUpdate from "@/pages/dashboard/admin/ProductUpdate";
 import SingleOrderDetails from "@/pages/dashboard/admin/SingleOrderDetails";
+import DashboardHome from "@/pages/dashboard/DashboardHome";
 import MyOrders from "@/pages/dashboard/user/MyOrders";
 import MyProfile from "@/pages/dashboard/user/MyProfile";
 import OrderDetails from "@/pages/dashboard/user/OrderDetails";
@@ -40,11 +43,15 @@ const router = createBrowserRouter([
       },
       {
         path: "/product/:id",
-        element: (
-          <ProtectedRoute role={[USER_ROLE.admin, USER_ROLE.customer]}>
-            <ProductDetails />
-          </ProtectedRoute>
-        ),
+        element: <ProductDetails />,
+      },
+      {
+        path: "/allCategory",
+        element: <Category />,
+      },
+      {
+        path: "/category/:categoryName",
+        element: <CategoryProducts />,
       },
       {
         path: "/cart",
@@ -88,6 +95,10 @@ const router = createBrowserRouter([
       </ProtectedRoute>
     ),
     children: [
+      {
+        index: true,
+        element: <DashboardHome />,
+      },
       // admin
       {
         path: "all-users",

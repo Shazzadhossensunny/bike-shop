@@ -11,6 +11,7 @@ import {
   ChevronUp,
   Package,
   ClipboardList,
+  LayoutDashboard,
 } from "lucide-react";
 
 export default function Sidebar() {
@@ -64,6 +65,21 @@ export default function Sidebar() {
         {/* Nav Items */}
         <div className="flex flex-col justify-between flex-1 mt-8">
           <nav>
+            {/* Dashboard Link for Both Roles */}
+            <NavLink
+              to="/dashboard"
+              className={({ isActive }) =>
+                `flex items-center px-4 py-3 my-2 transition-all duration-300 transform rounded-lg hover:bg-white/20 group ${
+                  isActive
+                    ? "bg-white/20 text-white scale-105"
+                    : "text-white/80"
+                }`
+              }
+            >
+              <LayoutDashboard className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
+              <span className="mx-4 font-medium">Dashboard</span>
+            </NavLink>
+
             {/* Customer Navigation */}
             {role === "customer" && (
               <>
@@ -201,20 +217,8 @@ export default function Sidebar() {
                           }`
                         }
                       >
-                        All Order
+                        All Orders
                       </NavLink>
-                      {/* <NavLink
-                        to="/dashboard/products"
-                        className={({ isActive }) =>
-                          `block px-4 py-2 rounded-lg transition-all duration-300 hover:bg-white/20 ${
-                            isActive
-                              ? "bg-white/20 text-white scale-105"
-                              : "text-white/80"
-                          }`
-                        }
-                      >
-                        All Products
-                      </NavLink> */}
                     </div>
                   )}
                 </div>

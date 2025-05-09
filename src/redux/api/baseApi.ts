@@ -10,7 +10,8 @@ import { logout, setUser } from "../features/auth/authSlice";
 import toast from "react-hot-toast";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://bike-store-livid.vercel.app/api",
+  // baseUrl: "https://bike-store-livid.vercel.app/api",
+  baseUrl: "http://localhost:5000/api",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth?.token;
@@ -47,13 +48,10 @@ const baseQueryWithRefreshToken: BaseQueryFn<
   }
   //* Check if the request was unauthorized
   if (result?.error && result?.error?.status === 401) {
-    const res = await fetch(
-      "https://bike-store-livid.vercel.app/api/auth/refresh-token",
-      {
-        method: "POST",
-        credentials: "include",
-      }
-    );
+    const res = await fetch("http://localhost:5000/api/auth/refresh-token", {
+      method: "POST",
+      credentials: "include",
+    });
     const refreshData: {
       data?: { accessToken: string };
       error?: string;

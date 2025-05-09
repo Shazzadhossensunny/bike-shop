@@ -3,11 +3,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#1E40AF",
-        secondary: "#F59E0B",
-        accent: "#4ADE80",
-        neutral: "#374151",
-        base: "#F3F4F6",
+        primary: "#1d4ed8",
+        secondary: "#334155",
+        accent: "#10b981",
+        neutral: "#111827",
+        base: "#f8fafc",
       },
       fontFamily: {
         sans: ["Poppins", "ui-sans-serif", "system-ui"],

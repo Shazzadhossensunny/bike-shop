@@ -35,7 +35,7 @@ export type TUser = {
   _id: string;
   name: string;
   email: string;
-  role: string;
+  role: "admin" | "customer";
   createdAt: string;
   updatedAt: string;
   isActive: boolean;

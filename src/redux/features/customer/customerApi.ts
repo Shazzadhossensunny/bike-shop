@@ -1,5 +1,5 @@
 import { baseApi } from "@/redux/api/baseApi";
-// import { TQueryParam, TResponseRedux } from "@/type";
+import { TResponseRedux, TUser } from "@/type";
 
 const customerApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -9,6 +9,7 @@ const customerApi = baseApi.injectEndpoints({
         method: "GET",
       }),
       providesTags: ["Users"],
+      transformResponse: (response: TResponseRedux<TUser>) => response.data,
     }),
     registerUser: builder.mutation({
       query: (data) => ({

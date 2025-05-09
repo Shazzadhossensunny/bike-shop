@@ -5,6 +5,9 @@ import LoadingSpinner from "../shared/LoadingSpinner";
 export default function FeaturedProducts() {
   const { data: featuredProducts, isLoading } =
     useGetFeaturedProductsQuery(undefined);
+
+  console.log(featuredProducts);
+
   return (
     <section className="py-16">
       <div className="container mx-auto px-4">
