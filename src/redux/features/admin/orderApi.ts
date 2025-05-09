@@ -26,13 +26,7 @@ const orderAPi = baseApi.injectEndpoints({
         };
       },
     }),
-    getMyOrders: builder.query({
-      query: () => ({
-        url: `/orders/my-orders`,
-      }),
-      providesTags: ["Orders"],
-      transformResponse: (response: TResponseRedux<any>) => response.data,
-    }),
+
     getSingleOrderByOrderId: builder.query({
       query: (orderId) => ({
         url: `/orders/${orderId}`,
@@ -62,5 +56,4 @@ export const {
   useGetAllOrdersQuery,
   useDeleteOrderMutation,
   useUpdateOrderStatusMutation,
-  useGetMyOrdersQuery,
 } = orderAPi;

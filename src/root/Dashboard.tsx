@@ -6,6 +6,7 @@ import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 
 export default function Dashboard() {
   const user = useAppSelector(selectCurrentUser);
+  console.log(user);
   const location = useLocation();
   const isRootDashboard = location.pathname === "/dashboard";
 

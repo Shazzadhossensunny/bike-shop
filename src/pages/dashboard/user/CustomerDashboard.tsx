@@ -1,49 +1,42 @@
 import { useAppSelector } from "@/redux/hook";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { useGetSingleUserQuery } from "@/redux/features/customer/customerApi";
-import {
-  Users,
-  ShoppingBag,
-  CreditCard,
-  Package,
-  Calendar,
-  Settings,
-} from "lucide-react";
-import { useGetMyOrdersQuery } from "@/redux/features/admin/orderApi";
+
+import { Users, ShoppingBag, CreditCard, AlertTriangle } from "lucide-react";
 import { TOrder } from "@/type/order.type";
+import { useGetAllOrdersQuery } from "@/redux/features/admin/orderApi";
 
 const CustomerDashboard = () => {
   // Get the current user from redux state
   const user = useAppSelector(selectCurrentUser);
-  const userId = user?.userId || user?.userId || "";
+
+  // Ensure we have a valid userId - check all possible property names
+  const userId = user?.userId || "";
 
   // Fetch user data
   const { data: userData } = useGetSingleUserQuery(userId);
 
-  // Use the new myOrders endpoint
+  // Fetch all orders
   const {
-    data: ordersData,
+    data: ordersResponse,
     isLoading,
     isError,
-  } = useGetMyOrdersQuery(undefined);
+  } = useGetAllOrdersQuery(undefined);
 
-  const orders = ordersData || [];
-  const recentOrders = orders.slice(0, 3); // Get 3 most recent orders
-  const totalSpent = orders.reduce(
-    (sum: any, order: any) => sum + (order.totalAmount || 0),
+  // Filter orders to show only those belonging to the current user
+  const orders: TOrder[] =
+    ordersResponse?.data?.filter(
+      (order: TOrder) => order.user._id === userId
+    ) || [];
+
+  const recentOrders = orders?.slice(0, 3); // Get 3 most recent orders
+  const totalSpent = orders?.reduce(
+    (sum: number, order: TOrder) => sum + (order.totalAmount || 0),
     0
   );
 
   if (isLoading) {
     return <div className="container mx-auto px-4 py-8">Loading...</div>;
-  }
-
-  if (isError) {
-    return (
-      <div className="container mx-auto px-4 py-8 text-red-500">
-        Error loading orders. Please try again.
-      </div>
-    );
   }
 
   return (
@@ -61,13 +54,25 @@ const CustomerDashboard = () => {
         </p>
       </div>
 
+      {/* Error notification if applicable */}
+      {isError && (
+        <div className="bg-red-100 border-l-4 border-red-500 p-4 mb-6 rounded shadow">
+          <div className="flex items-center">
+            <AlertTriangle className="h-5 w-5 text-red-500 mr-2" />
+            <p className="text-red-700">
+              Unable to load your orders. Please try again later.
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Dashboard Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
         <div className="bg-blue-100 p-6 rounded-lg shadow-md">
           <div className="flex justify-between items-center">
             <div>
               <h3 className="text-lg font-medium text-gray-700">Your Orders</h3>
-              <p className="text-2xl font-bold mt-2">{orders.length}</p>
+              <p className="text-2xl font-bold mt-2">{orders?.length}</p>
             </div>
             <div className="rounded-full p-3 bg-white/60 backdrop-blur-sm">
               <ShoppingBag className="h-6 w-6 text-blue-500" />
@@ -80,7 +85,7 @@ const CustomerDashboard = () => {
             <div>
               <h3 className="text-lg font-medium text-gray-700">Total Spent</h3>
               <p className="text-2xl font-bold mt-2">
-                ${totalSpent.toLocaleString()}
+                ${totalSpent?.toLocaleString()}
               </p>
             </div>
             <div className="rounded-full p-3 bg-white/60 backdrop-blur-sm">
@@ -123,7 +128,7 @@ const CustomerDashboard = () => {
                 </tr>
               </thead>
               <tbody>
-                {recentOrders.map((order: TOrder) => (
+                {recentOrders?.map((order: TOrder) => (
                   <tr key={order._id}>
                     <td className="py-2 px-4 border-b">
                       {order._id.slice(-6)}
@@ -182,13 +187,15 @@ const CustomerDashboard = () => {
           </div>
         ) : (
           <p className="text-gray-500 text-center py-4">
-            You haven't placed any orders yet.
+            {isError
+              ? "Unable to load orders"
+              : "You haven't placed any orders yet."}
           </p>
         )}
         {orders.length > 3 && (
           <div className="mt-4 text-right">
             <a
-              href="/dashboard/my-orders"
+              href="/dashboard/orders"
               className="text-blue-600 hover:underline"
             >
               View all orders →

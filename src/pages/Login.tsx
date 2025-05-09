@@ -4,10 +4,22 @@ import { setUser, TUser } from "@/redux/features/auth/authSlice";
 
 import { useAppDispatch } from "@/redux/hook";
 import { verifyToken } from "@/utils/verifyToken";
-import { Lock, Mail } from "lucide-react";
+import { Lock, Mail, User } from "lucide-react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+type Role = "admin" | "customer";
+// Predefined credentials for different roles
+const roleCredentials: Record<Role, { email: string; password: string }> = {
+  admin: {
+    email: "sunny@gmail.com",
+    password: "123456",
+  },
+  customer: {
+    email: "ayaan@gmail.com",
+    password: "123456",
+  },
+};
 
 export default function Login() {
   const [login, { isLoading }] = useLoginMutation();
@@ -21,6 +33,7 @@ export default function Login() {
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
   } = useForm();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
@@ -43,12 +56,44 @@ export default function Login() {
     }
     reset();
   };
+
+  // Function to fill form with role credentials
+  const fillCredentials = (role: Role) => {
+    const credentials = roleCredentials[role];
+    setValue("email", credentials.email);
+    setValue("password", credentials.password);
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-base">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-primary text-center">
-          Login
+          Login to BikeShop
         </h2>
+
+        {/* Quick Login Buttons */}
+        <div className="mb-6">
+          <p className="text-sm text-gray-500 mb-2 text-center">Quick Login:</p>
+          <div className="flex space-x-4 justify-center">
+            <button
+              type="button"
+              onClick={() => fillCredentials("admin")}
+              className="flex items-center justify-center px-4 py-2 rounded-md border border-red-200 bg-red-50 hover:bg-red-100 text-red-700 text-sm transition-colors"
+            >
+              <User className="mr-2 h-4 w-4" />
+              Admin
+            </button>
+            <button
+              type="button"
+              onClick={() => fillCredentials("customer")}
+              className="flex items-center justify-center px-4 py-2 rounded-md border border-blue-200 bg-blue-50 hover:bg-blue-100 text-blue-700 text-sm transition-colors"
+            >
+              <User className="mr-2 h-4 w-4" />
+              Customer
+            </button>
+          </div>
+        </div>
+
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <label
@@ -112,6 +157,7 @@ export default function Login() {
               </div>
               <input
                 type="password"
+                id="password"
                 placeholder="Enter your password"
                 {...register("password", {
                   required: "Password is required",
@@ -157,7 +203,7 @@ export default function Login() {
         </form>
         <div className="mt-4 text-center">
           <p className="text-sm text-neutral">
-            Don't have an account?
+            Don't have an account?{" "}
             <Link to="/register" className="text-primary hover:underline">
               Register here
             </Link>

@@ -5,7 +5,6 @@ import {
   DocumentTextIcon,
   ShieldCheckIcon,
   TruckIcon,
-  CreditCardIcon,
   RefreshIcon,
   QuestionMarkCircleIcon,
   ClipboardCheckIcon,
@@ -19,7 +18,6 @@ import {
   GlobeIcon,
   UserIcon,
   LockClosedIcon,
-  CashIcon,
   AnnotationIcon,
 } from "@heroicons/react/solid";
 

@@ -230,7 +230,7 @@ const AdminDashboard = () => {
                     `${name}: ${(percent * 100).toFixed(0)}%`
                   }
                 >
-                  {categoryDistribution.map((entry, index) => (
+                  {categoryDistribution.map((_, index) => (
                     <Cell
                       key={`cell-${index}`}
                       fill={COLORS[index % COLORS.length]}
@@ -238,10 +238,7 @@ const AdminDashboard = () => {
                   ))}
                 </Pie>
                 <Tooltip
-                  formatter={(value, name, props) => [
-                    value,
-                    props.payload.name,
-                  ]}
+                  formatter={(value, _, props) => [value, props.payload.name]}
                 />
               </RePieChart>
             </ResponsiveContainer>
