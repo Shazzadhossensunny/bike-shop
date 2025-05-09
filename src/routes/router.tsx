@@ -21,6 +21,7 @@ import Error from "@/pages/Error";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
 import PaymentSuccess from "@/pages/PaymentSuccess";
+import PolicyPage from "@/pages/Policy";
 import ProductDetails from "@/pages/ProductDetails";
 import Register from "@/pages/Register";
 import Dashboard from "@/root/Dashboard";
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
       {
         path: "/category/:categoryName",
         element: <CategoryProducts />,
+      },
+      {
+        path: "/policy",
+        element: <PolicyPage />,
       },
       {
         path: "/cart",

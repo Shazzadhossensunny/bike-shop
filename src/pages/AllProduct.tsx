@@ -128,7 +128,7 @@ export default function AdvancedProductList() {
     }, [productsData?.data]);
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-12 lg:py-20">
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Filters Sidebar */}
         <div className="w-full lg:w-1/4 bg-white p-4 rounded-lg shadow-md">

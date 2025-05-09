@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
+import { Bike } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -8,7 +9,14 @@ export default function Footer() {
       <div className="container px-4 mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
         {/* Company Info */}
         <div>
-          <h3 className="text-2xl font-bold mb-4">BikeShop</h3>
+          {/* <h3 className="text-2xl font-bold mb-4">BikeShop</h3> */}
+          <Link
+            to="/"
+            className="flex items-center text-2xl font-bold gap-2 mb-4"
+          >
+            <Bike className="w-6 h-6" />
+            BikeShop
+          </Link>
           <p className="text-base-200">
             Your one-stop destination for premium bicycles and cycling gear.
           </p>
@@ -42,6 +50,14 @@ export default function Footer() {
                 className="hover:text-accent transition-colors"
               >
                 Contact
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/policy"
+                className="hover:text-accent transition-colors"
+              >
+                Policy
               </Link>
             </li>
           </ul>

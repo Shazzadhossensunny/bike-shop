@@ -13,6 +13,7 @@ import { logout } from "@/redux/features/auth/authSlice";
 import toast from "react-hot-toast";
 import { useGetAllProductQuery } from "@/redux/features/admin/productApi";
 import { TProduct } from "@/type";
+import { Bike } from "lucide-react";
 
 type TCategory = {
   name: string;
@@ -140,8 +141,9 @@ export default function Navbar() {
           {/* Logo */}
           <Link
             to="/"
-            className="flex items-center text-2xl font-bold text-primary"
+            className="flex items-center text-2xl font-bold text-primary gap-2"
           >
+            <Bike className="w-6 h-6" />
             BikeShop
           </Link>
 
